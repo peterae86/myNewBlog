@@ -63,6 +63,8 @@ http2.createServer({
     key: fs.readFileSync('./my.key'),
     cert: fs.readFileSync('./my.crt')
 }, function (req, resp) {
+    req.headers.scheme = "http";
+    req.headers.Host = "www.acfun.tv";
     var options = {
         host: "www.acfun.tv",
         port: 80,
@@ -70,14 +72,16 @@ http2.createServer({
         method: req.method,
         headers: req.headers
     };
-    http.request(options, function (res) {
+    var proxyReq = http.request(options, function (res) {
         if (res == null) {
             throw new Error("nima");
         }
         resp.headers = res.headers;
         res.pipe(resp);
         console.log(req.url);
-    }).end();
+    });
+    req.pipe(proxyReq);
+    proxyReq.end();
 }).listen(8443, function (err) {
     console.log(err);
 });
