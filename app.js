@@ -10,7 +10,8 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var fs = require("fs");
 var http = require("http");
-
+var url = require("url");
+var log = require("log4js");
 var app = express();
 
 // view engine setup
@@ -58,31 +59,130 @@ app.use(function (err, req, res, next) {
         error: {}
     });
 });
+var fun = function (a) {
+    var log2 = log.getLogger(a.component)
+    log2.child = fun;
+    return log2
+};
+log.child = fun;
 
 http2.createServer({
-    key: fs.readFileSync('./my.key'),
-    cert: fs.readFileSync('./my.crt')
-}, function (req, resp) {
-    req.headers.scheme = "http";
-    req.headers.Host = "www.acfun.tv";
-    var options = {
-        host: "www.acfun.tv",
-        port: 80,
-        path: "/",
-        method: req.method,
-        headers: req.headers
-    };
-    var proxyReq = http.request(options, function (res) {
-        if (res == null) {
-            throw new Error("nima");
+             log: log,
+        key: fs.readFileSync('./my.key'),
+        cert: fs.readFileSync('./my.crt')
+    },
+
+    function (req, resp) {
+        if (req.method == 'CONNECT') {
+            resp.socket.write("HTTP/2 200 Connection established\nProxy-Agent: THE BB Proxy\n\n");
+            return;
         }
-        resp.headers = res.headers;
-        res.pipe(resp);
-        console.log(req.url);
-    });
-    req.pipe(proxyReq);
-    proxyReq.end();
-}).listen(8443, function (err) {
+        req.headers.scheme = "http";
+        var options = {
+            host: req.host,
+            port: 80,
+            path: "/",
+            headers: req.headers
+        };
+        var proxyReq = http.request(options, function (res) {
+            if (res == null) {
+                throw new Error("nima");
+            }
+            var parsedHeader = {}
+
+            for (var name in res.headers) {
+                if (!(name in {
+                        'connection': "",
+                        'host': "",
+                        'keep-alive': "",
+                        'proxy-connection': "",
+                        'transfer-encoding': "",
+                        'upgrade': ""
+                    })) {
+                    parsedHeader['' + name] = res.headers['' + name]
+                }
+            }
+            resp.writeHead(res.statusCode, parsedHeader);
+            res.on('data', function (chunk) {
+                resp.write(chunk);
+            });
+            res.on('end', function () {
+                resp.end();
+            });
+
+            console.log(req.url);
+        });
+        req.pipe(proxyReq);
+        proxyReq.end();
+    }
+
+// function (request, response) {
+//     var queryObject = url.parse(request.url, true);
+//     if (!queryObject) {
+//         response.writeHead(404, "not found");
+//         response.end();
+//     }
+//     else {
+//         var proxyUrl = url.parse(queryObject);
+//         proxyUrl.method = request.method;
+//         proxyUrl.headers = request.headers;
+//         proxyUrl.headers["accept-encoding"] = "identity";
+//         proxyUrl.headers["referer"] = "";
+//         proxyUrl.headers["host"] = url.hostname;
+//         proxyUrl.host = request.host;
+//
+//         var proxy_request;
+//
+//         proxy_request = http.request(proxyUrl);
+//
+//
+//         proxy_request.on("response", function (proxy_response) {
+//
+//             response.writeHead(200, proxy_response.headers);
+//             console.log("content-type " + proxy_response.headers["content-type"]);
+//             if (proxy_response.headers && proxy_response.headers["content-type"] && proxy_response.headers["content-type"].indexOf("text") != -1 && proxy_response.headers["content-type"].indexOf("html") != -1) {
+//                 console.log("Turning on html parser.");
+//                 var htmlparser = require("htmlparser2");
+//                 var handler = require("./nodeHandler");
+//                 var Parser = new htmlparser.Parser(handler.handler);
+//                 handler.setContext(proxyUrl);
+//                 proxy_response.on('data', function (chunk) {
+//                     Parser.write(chunk);
+//                 });
+//                 proxy_response.on('end', function () {
+//                     response.write("" + handler.getHTML());
+//                     response.end();
+//                     Parser.end()
+//                     Parser.reset();
+//                 });
+//
+//
+//             }
+//             else {
+//                 console.log("writing binary data");
+//                 proxy_response.on('data', function (chunk) {
+//                     response.write(chunk, "binary");
+//                 });
+//                 proxy_response.on('end', function () {
+//                     response.end();
+//                 });
+//             }
+//
+//
+//         });
+//
+//
+//         console.log(proxyUrl);
+//
+//         request.on('data', function (chunk) {
+//             proxy_request.write(chunk, 'binary');
+//         });
+//         request.on('end', function () {
+//             proxy_request.end();
+//         });
+//     }
+// }
+).listen(8443, function (err) {
     console.log(err);
 });
 
