@@ -66,15 +66,14 @@ http2.createServer({
     cert: fs.readFileSync('./my.crt')
 }).on('request', function (req, resp) {
     try {
-        var u = url.parse(req.url);
+        console.log(req.headers.host + req.url);
         var options = {
-            host: u.hostname,
-            port: u.port,
+            host: req.headers.host,
+            port: req.port,
             method: req.method,
-            path: u.path,
+            path: req.url,
             headers: req.headers
         };
-        console.log(u.hostname + u.path);
         var proxyReq = http.request(options, function (proxyResp) {
             for (var i = 0; i < array.length; i++) {
                 if (proxyResp.headers.hasOwnProperty(array[i])) {
