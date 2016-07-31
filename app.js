@@ -59,7 +59,7 @@ app.use(function (err, req, res, next) {
         error: {}
     });
 });
-
+var array = ['connection', 'host', 'keep-alive', 'proxy-connection', 'transfer-encoding', 'upgrade'];
 http2.createServer({
     //   log: log,
     key: fs.readFileSync('./my.key'),
@@ -74,23 +74,17 @@ http2.createServer({
             path: u.path,
             headers: req.headers
         };
+        console.log(u.hostname + u.path);
         var proxyReq = http.request(options, function (proxyResp) {
-            var parsedHeader = {};
-            for (var name in proxyResp.headers) {
-                if (!(name in {
-                        'connection': "",
-                        'host': "",
-                        'keep-alive': "",
-                        'proxy-connection': "",
-                        'transfer-encoding': "",
-                        'upgrade': ""
-                    })) {
-                    parsedHeader['' + name] = proxyResp.headers['' + name]
+            for (var i = 0; i < array.length; i++) {
+                if (proxyResp.headers.hasOwnProperty(array[i])) {
+                    delete proxyResp.headers[array[i]];
                 }
             }
             resp.writeHead(proxyResp.statusCode, parsedHeader);
             proxyResp.pipe(resp)
         }).on('error', function (e) {
+            console.log(e);
             resp.end()
         });
         req.pipe(proxyReq);
