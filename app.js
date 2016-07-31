@@ -66,104 +66,64 @@ http2.createServer({
     key: fs.readFileSync('./my.key'),
     cert: fs.readFileSync('./my.crt')
 }).on('request', function (req, resp) {
-    console.log(222)
-    req.headers.scheme = "http";
-    var options = {
-        host: req.host,
-        port: 80,
-        path: "/",
-        headers: req.headers
-    };
-    var proxyReq = http.request(options, function (res) {
-        if (res == null) {
-            throw new Error("nima");
-        }
-        var parsedHeader = {}
-
-        for (var name in res.headers) {
-            if (!(name in {
-                    'connection': "",
-                    'host': "",
-                    'keep-alive': "",
-                    'proxy-connection': "",
-                    'transfer-encoding': "",
-                    'upgrade': ""
-                })) {
-                parsedHeader['' + name] = res.headers['' + name]
+    try {
+        console.log(req.headers.host + "" + req.url);
+        var options = {
+            host: req.headers.host,
+            port: req.port,
+            method: req.method,
+            path: req.url,
+            headers: req.headers
+        };
+        var proxyReq = http.request(options, function (proxyResp) {
+            var parsedHeader = {};
+            for (var name in proxyResp.headers) {
+                if (!(name in {
+                        'connection': "",
+                        'host': "",
+                        'keep-alive': "",
+                        'proxy-connection': "",
+                        'transfer-encoding': "",
+                        'upgrade': ""
+                    })) {
+                    parsedHeader['' + name] = proxyResp.headers['' + name]
+                }
             }
-        }
-        resp.writeHead(res.statusCode, parsedHeader);
-        res.on('data', function (chunk) {
-            resp.write(chunk);
+            resp.writeHead(proxyResp.statusCode, parsedHeader);
+            proxyResp.pipe(resp)
+        }).on('error', function (e) {
+            resp.end()
         });
-        res.on('end', function () {
-            resp.end();
-        });
-
-        console.log(req.url);
-    });
-    req.pipe(proxyReq);
-    proxyReq.end();
+        req.pipe(proxyReq);
+    } catch (e) {
+        console.log(e);
+    }
 }).on('connect', function (req, socket) {
-    var requestOptions = {
-        host: req.headers.host.split(':')[0],
-        port: req.headers.host.split(':')[1] || 443,
-    };
-    // if (options.localAddress) {
-    //     requestOptions.localAddress = options.localAddress;
-    // }
-
-    var tunnel = net.createConnection(requestOptions, function () {
-        // socket.writeHead(200,"Connection established",{});
-        synReply(socket, 200, 'Connection established',
-            {
-                'Connection': 'keep-alive',
-                'Proxy-Agent': 'SPDY Proxy '
-            },
-            function () {
-                tunnel.pipe(socket);
-                socket.pipe(tunnel);
-            }
-        );
-    });
-
-    tunnel.setNoDelay(true);
-
-    tunnel.on('error', function (e) {
-        console.log("Tunnel error: ".red + e);
-        synReply(socket, 502, "Tunnel Error", {}, function () {
+    try {
+        var requestOptions = {
+            host: req.headers.host.split(':')[0],
+            port: req.headers.host.split(':')[1] || 443
+        };
+        console.log(requestOptions.host);
+        if (!socket._handle._spdyState) {
+            return;
+        }
+        var tunnel = net.createConnection(requestOptions, function () {
+            socket._handle._spdyState.stream.respond(200, {});
+            tunnel.pipe(socket);
+            socket.pipe(tunnel);
+        });
+        tunnel.setNoDelay(true);
+        tunnel.on('error', function (e) {
+            console.log("Tunnel error: ".red + e);
+            socket._handle._spdyState.stream.respond(502, {});
             socket.end();
         });
-    });
+    } catch (e) {
+        console.log(e);
+    }
 }).listen(8443, function (err) {
     console.log(err);
 });
 
-function synReply(socket, code, reason, headers, cb) {
-    try {
-        if (socket._handle) {
-            socket._handle._spdyState.stream._spdyState.framer.headersFrame(
-                {
-                    status: 200
-                }
-            );
-
-
-            // Chrome used raw SSL instead of SPDY when issuing CONNECT for
-            // WebSockets. Hence, to support WS we must fallback to regular
-            // HTTPS tunelling: https://github.com/igrigorik/node-spdyproxy/issues/26
-        } else {
-
-            var statusLine = 'HTTP/1.1 ' + code + ' ' + reason + '\r\n';
-            var headerLines = '';
-            for (var key in headers) {
-                headerLines += key + ': ' + headers[key] + '\r\n';
-            }
-            socket.write(statusLine + headerLines + '\r\n', 'UTF-8', cb);
-        }
-    } catch (error) {
-        console.log(error);
-        cb.call();
-    }
-}
 module.exports = app;
