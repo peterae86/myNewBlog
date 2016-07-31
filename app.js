@@ -107,7 +107,8 @@ http2.createServer({
         if (!socket._handle._spdyState) {
             return;
         }
-        var tunnel = net.createConnection(requestOptions, function () {
+        var tunnel = net.createConnection(requestOptions, function (resp) {
+            console.log(resp);
             socket._handle._spdyState.stream.respond(200, {});
             tunnel.pipe(socket);
             socket.pipe(tunnel);
