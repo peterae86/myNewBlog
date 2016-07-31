@@ -66,7 +66,7 @@ http2.createServer({
     cert: fs.readFileSync('./my.crt')
 }).on('request', function (req, resp) {
     try {
-        console.log(req.headers.host + " " + req.url + " " + req.path);
+        console.log(req);
         var options = {
             host: req.headers.host,
             port: req.port,
