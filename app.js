@@ -80,7 +80,7 @@ http2.createServer({
                     delete proxyResp.headers[array[i]];
                 }
             }
-            resp.writeHead(proxyResp.statusCode, parsedHeader);
+            resp.writeHead(proxyResp.statusCode, proxyResp.headers);
             proxyResp.pipe(resp)
         }).on('error', function (e) {
             console.log(e);
