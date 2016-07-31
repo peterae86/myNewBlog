@@ -105,6 +105,7 @@ http2.createServer({
         };
         console.log(requestOptions.host);
         if (!socket._handle._spdyState) {
+            console.log("there");
             return;
         }
         var tunnel = net.createConnection(requestOptions, function (resp) {
