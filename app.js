@@ -13,7 +13,6 @@ var http = require("http");
 var url = require("url");
 var net = require("net");
 var app = express();
-var proxy = require("spdyproxy")
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
