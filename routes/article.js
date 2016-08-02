@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var articleService = require('../service/articleService');
 
 /* GET home page. */
 router
@@ -11,6 +12,7 @@ router
     });
 
 router.get('/article/page/:num', function (req, res) {
+    articleService.query(1,2);
     res.json({count: 1})
 });
 router.get('/article/tags', function (req, res) {
