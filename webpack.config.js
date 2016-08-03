@@ -1,16 +1,19 @@
 var webpack = require('webpack');
 var commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common.js');
-
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var extractCSS = new ExtractTextPlugin('[name].css');
 module.exports = {
     //插件项
-    plugins: [commonsPlugin],
+    plugins: [
+        extractCSS
+    ],
     //页面入口文件配置
     entry: {
-        index: './src/js/index.js'
+        header: './web/js/header.js'
     },
     //入口文件输出配置
     output: {
-        path: 'pubilc',
+        path: './web/public/javascript',
         filename: '[name].js'
     },
     module: {
@@ -18,7 +21,7 @@ module.exports = {
         loaders: [
             {test: /\.css$/, loader: 'style-loader!css-loader'},
             {test: /\.js$/, loader: 'jsx-loader?harmony'},
-            {test: /\.scss$/, loader: 'style!css!sass?sourceMap'},
+            {test: /\.scss$/, loader: 'style!css!sass'},
             {test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192'}
         ]
     }
