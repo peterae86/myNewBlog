@@ -6,4 +6,3 @@ var dd = new Vue({
     data: {test: "test"}
 });
 
-console.log("dsdada");

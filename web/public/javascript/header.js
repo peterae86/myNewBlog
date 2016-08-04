@@ -53,7 +53,7 @@
 	    data: {test: "test"}
 	});
 
-	console.log("dsdada");
+
 
 /***/ },
 
@@ -10622,7 +10622,7 @@
 
 
 	// module
-	exports.push([module.id, "#test {\n  position: fixed;\n  width: 100%;\n  top: 0;\n  left: 0;\n  z-index: 999; }\n", ""]);
+	exports.push([module.id, "body {\n  font-family: Helvetica, serif; }\n\n#articleList {\n  align-content: center;\n  width: 900px;\n  background: gray;\n  height: 1000px; }\n", ""]);
 
 	// exports
 
