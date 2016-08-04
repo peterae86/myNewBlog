@@ -1,4 +1,4 @@
 div#editor.
     <textarea v-model="input" debounce="300"></textarea>
-    <div v-html="input | marked"></div>
+    <div id="view" v-html="input | marked"></div>
 script(type="text/javascript" src="/javascript/editor.js")
