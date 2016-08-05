@@ -10622,7 +10622,7 @@
 
 
 	// module
-	exports.push([module.id, "body {\n  font-family: Helvetica, serif; }\n\n#articleList {\n  align-content: center;\n  width: 900px;\n  background: gray;\n  height: 1000px; }\n", ""]);
+	exports.push([module.id, "body {\n  font-family: Helvetica, serif; }\n\n@keyframes spin {\n  0% {\n    transform: rotate(0deg); }\n  100% {\n    transform: rotate(360deg); } }\n\n#header {\n  display: inline-block;\n  width: 30%;\n  height: 100%; }\n\n#headImg {\n  width: 100px;\n  height: 100px;\n  border-radius: 100px;\n  background-image: url(\"http://wx.qlogo.cn/mmopen/ajNVdqHZLLB7iaCOVBwicIHPktt8ISjnhJs8UhXKbkooSIic9aJqOOOZ6ePw750tJPtpGUCsoeaNW1ubVT0O2Y3Zg/0\");\n  background-size: 100% 100%; }\n  #headImg:hover {\n    animation: spin 800ms infinite linear; }\n\n#articleList {\n  margin: 0 0 0 auto;\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  right: 0;\n  display: inline-block;\n  width: 70%;\n  background: whitesmoke;\n  height: 100%; }\n", ""]);
 
 	// exports
 

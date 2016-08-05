@@ -14,8 +14,7 @@ var express = require("express");
 proxy(config.httpsConfig, 8443);
 var redirectApp = express();
 redirectApp.use('*', function (req, res) {
-    console.log(req);
-    return res.redirect(['https://', req.host, req.originalUrl].join(''));
+    return res.redirect(['https://', req.hostname, req.originalUrl].join(''));
 });
 http.createServer(redirectApp).listen(80);
 var server = http2.createServer(config.httpsConfig, app);

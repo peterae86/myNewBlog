@@ -2,13 +2,53 @@ body {
   font-family: Helvetica, serif;
 }
 
-#header {
+@mixin center {
+  margin: 0 0 0 auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
 
+@mixin inline {
+  display: inline-block;
+}
+
+@mixin circle($width) {
+  border-radius: $width
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+#header {
+  @include inline;
+  width: 30%;
+  height: 100%;
+}
+
+#headImg {
+  width: 100px;
+  height: 100px;
+  @include circle(100px);
+  background-image: url("http://wx.qlogo.cn/mmopen/ajNVdqHZLLB7iaCOVBwicIHPktt8ISjnhJs8UhXKbkooSIic9aJqOOOZ6ePw750tJPtpGUCsoeaNW1ubVT0O2Y3Zg/0");
+  background-size: 100% 100%;
+  &:hover {
+    animation: spin 800ms infinite linear;
+  }
 }
 
 #articleList {
-  align-content: center;
-  width: 900px;
-  background: gray;
-  height: 1000px
+  @include center;
+  @include inline;
+  width: 70%;
+  background: whitesmoke;
+  height: 100%;
 }
