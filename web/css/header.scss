@@ -1,6 +1,22 @@
+$white: #FFFFFF;
+
+$red: #FF606E;
+
+$lightBlue: #00DDD8;
+
+$blue: #517398;
+
+$darkBlue: #262C3A;
+$darkBlue2: #2C3242;
+
+@import "init";
+
 body {
-  font-family: Helvetica, serif;
+  font-family: Helvetica, Tahoma, Arial, STXihei, "华文细黑", "Microsoft YaHei", "微软雅黑", sans-serif;
+  background: honeydew;
+  height: 100%;
 }
+
 
 @mixin center {
   margin: 0 0 0 auto;
@@ -16,7 +32,8 @@ body {
 }
 
 @mixin circle($width) {
-  border-radius: $width
+  border-radius: $width;
+  border: 3px $darkBlue solid;
 }
 
 @keyframes spin {
@@ -28,27 +45,84 @@ body {
   }
 }
 
+#headBackground {
+  width: 100%;
+  height: 150px;
+  background-color: $lightBlue;
+  margin-top: 0;
+}
+
 #header {
-  @include inline;
-  width: 30%;
+  width: 300px;
   height: 100%;
+  text-align: center;
+  background: $darkBlue;
+  margin-right: 5px;
+  position: fixed;
 }
 
 #headImg {
-  width: 100px;
-  height: 100px;
-  @include circle(100px);
+  width: 97px;
+  height: 97px;
+  @include circle(97px);
   background-image: url("http://wx.qlogo.cn/mmopen/ajNVdqHZLLB7iaCOVBwicIHPktt8ISjnhJs8UhXKbkooSIic9aJqOOOZ6ePw750tJPtpGUCsoeaNW1ubVT0O2Y3Zg/0");
   background-size: 100% 100%;
+  margin: 100px auto auto;
+  position: absolute;
+  left: 100px;
+  float: left;
   &:hover {
     animation: spin 800ms infinite linear;
   }
 }
 
+#title {
+  font-size: x-large;
+  font-weight: bold;
+  margin-top: 80px;
+  color: whitesmoke;
+}
+
+.category {
+  font-size: large;
+  font-weight: 700;
+  color: whitesmoke;
+  margin-top: 20px;
+  &:hover {
+    color: $red;
+  }
+}
+
 #articleList {
-  @include center;
-  @include inline;
-  width: 70%;
-  background: whitesmoke;
-  height: 100%;
+  margin-left: 305px;
+  background: $darkBlue;
+}
+
+.articleItem {
+  color: whitesmoke;
+  border-left: 5px 	$lightBlue solid;
+  padding: 10px 10px 0;
+  &:hover {
+    background-color: $darkBlue2;
+  }
+}
+
+.articleTitle {
+  height: 50px;
+  font-size: large;
+  color: honeydew;
+}
+
+.articleAbstract {
+  font-size: medium;
+  border-bottom: 2px $darkBlue2 solid;
+  padding-bottom: 10px;
+  color: honeydew;
+}
+
+.time{
+  font-size: large;
+  border-left: 5px #FFD700 solid;
+  color: #FFD700;
+  padding: 10px;
 }
