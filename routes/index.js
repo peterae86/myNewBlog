@@ -1,6 +1,7 @@
 var express = require('express');
 var fs = require('fs');
 var router = express.Router();
+var headerjs = fs.readFileSync('web/public/javascript/header.js')
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -17,7 +18,7 @@ router.get('/', function (req, res, next) {
     stream.on('error', function (err) {
         console.log(err);
     });
-    stream.end(fs.readFileSync('web/public/javascript/header.js'));
+    stream.end(headerjs);
     res.render('header', {title: '施工中'});
 });
 
