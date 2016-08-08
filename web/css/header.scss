@@ -17,7 +17,6 @@ body {
   height: 100%;
 }
 
-
 @mixin center {
   margin: 0 0 0 auto;
   position: absolute;
@@ -77,10 +76,17 @@ body {
 }
 
 #title {
+  @include inline;
   font-size: x-large;
   font-weight: bold;
   margin-top: 80px;
-  color: whitesmoke;
+  color: $darkBlue;
+  animation: xx 0.5s linear 1;
+  animation-delay: 0.5s;
+  animation-fill-mode: forwards;
+}
+.container{
+  overflow: hidden;
 }
 
 .category {
@@ -88,6 +94,10 @@ body {
   font-weight: 700;
   color: whitesmoke;
   margin-top: 20px;
+  animation: yy 0.5s linear 1;
+  animation-delay: 1s;
+  animation-fill-mode: forwards;
+  transform: translateY(110%);
   &:hover {
     color: $red;
   }
@@ -100,7 +110,7 @@ body {
 
 .articleItem {
   color: whitesmoke;
-  border-left: 5px 	$lightBlue solid;
+  border-left: 5px $lightBlue solid;
   padding: 10px 10px 0;
   &:hover {
     background-color: $darkBlue2;
@@ -120,9 +130,41 @@ body {
   color: honeydew;
 }
 
-.time{
+.time {
   font-size: large;
   border-left: 5px #FFD700 solid;
   color: #FFD700;
-  padding: 10px;
+  padding-left: 10px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
+
+#underline {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  margin: 4px auto 0;
+  height: 3px;
+  width: 90%;
+  background: whitesmoke;
+
+  left: 0;
+}
+
+@keyframes xx {
+  from {
+    color: $darkBlue;
+  }
+  to {
+    color: whitesmoke;
+  }
+}
+
+@keyframes yy {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: translateY(0%);
+  }
 }
