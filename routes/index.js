@@ -1,7 +1,8 @@
 var express = require('express');
 var fs = require('fs');
+var zlib = require("zlib");
 var router = express.Router();
-var headerjs = fs.readFileSync('web/public/javascript/header.js')
+var headerjs = zlib.gzipSync(fs.readFileSync('web/public/javascript/header.js'));
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -12,7 +13,8 @@ router.get('/', function (req, res, next) {
             accept: '*/*'
         },
         response: {
-            'content-type': 'application/javascript'
+            'content-type': 'application/javascript',
+            'content-encoding': 'gzip'
         }
     });
     stream.on('error', function (err) {
