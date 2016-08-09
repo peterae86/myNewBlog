@@ -82,7 +82,7 @@ body {
   margin-top: 80px;
   color: $darkBlue;
   animation: xx 0.5s linear 1;
-  animation-delay: 0.5s;
+  animation-delay: 0.2s;
   animation-fill-mode: forwards;
 }
 .container{
@@ -95,7 +95,7 @@ body {
   color: whitesmoke;
   margin-top: 20px;
   animation: yy 0.5s linear 1;
-  animation-delay: 1s;
+  animation-delay: 0.7s;
   animation-fill-mode: forwards;
   transform: translateY(110%);
   &:hover {
