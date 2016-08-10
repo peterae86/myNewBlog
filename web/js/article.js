@@ -1,4 +1,4 @@
-var css = require("../css/index.scss");
+var css = require("../css/article.scss");
 var Vue = require("vue");
 
 var dd = new Vue({

@@ -9,6 +9,8 @@ $blue: #517398;
 $darkBlue: #262C3A;
 $darkBlue2: #2C3242;
 
+$yellow: #FFD700;
+
 @import "init";
 
 body {
@@ -85,7 +87,8 @@ body {
   animation-delay: 0.2s;
   animation-fill-mode: forwards;
 }
-.container{
+
+.container {
   overflow: hidden;
 }
 
@@ -101,42 +104,6 @@ body {
   &:hover {
     color: $red;
   }
-}
-
-#articleList {
-  margin-left: 305px;
-  background: $darkBlue;
-}
-
-.articleItem {
-  color: whitesmoke;
-  border-left: 5px $lightBlue solid;
-  padding: 10px 10px 0;
-  &:hover {
-    background-color: $darkBlue2;
-  }
-}
-
-.articleTitle {
-  height: 50px;
-  font-size: large;
-  color: honeydew;
-}
-
-.articleAbstract {
-  font-size: medium;
-  border-bottom: 2px $darkBlue2 solid;
-  padding-bottom: 10px;
-  color: honeydew;
-}
-
-.time {
-  font-size: large;
-  border-left: 5px #FFD700 solid;
-  color: #FFD700;
-  padding-left: 10px;
-  padding-bottom: 5px;
-  padding-top: 5px;
 }
 
 #underline {

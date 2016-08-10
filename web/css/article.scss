@@ -1,0 +1,64 @@
+@import "header";
+
+#article {
+  margin-left: 305px;
+  background: $darkBlue;
+  border-left: 5px $lightBlue solid;
+}
+
+.ds-thread {
+  margin: 10px;
+  color: honeydew;
+}
+
+.ds-highlight {
+  color: $red;
+}
+
+.ds-username {
+  color: $red;
+}
+
+#ds-thread #ds-reset .ds-comment-body p {
+  color: honeydew;
+}
+
+#ds-thread #ds-reset li.ds-tab a.ds-current {
+  text-shadow: none;
+  color: honeydew;
+  border-color: honeydew;
+}
+
+#ds-thread #ds-reset .ds-comment-body a:hover {
+  color: #FFD700;
+}
+
+#ds-thread #ds-reset .ds-textarea-wrapper textarea, #ds-thread #ds-reset .ds-textarea-wrapper .ds-hidden-text {
+  background-color: rgb(47,47,47);
+}
+
+#ds-thread #ds-reset .ds-sort a:hover{
+  color: #FFD700;
+}
+
+#ds-thread #ds-reset .ds-powered-by a:hover{
+  color: #FFD700;
+}
+
+#ds-reset .ds-avatar img{
+  border-radius: 50px;
+  border:  #2C3242 2px solid;
+  box-shadow: none;
+}
+
+#ds-reset .ds-avatar{
+  box-shadow: none;
+  background-color: #262C3A;
+}
+
+#ds-thread #ds-reset .ds-textarea-wrapper textarea{
+  color: honeydew;
+}
+#ds-thread #ds-reset .ds-textarea-wrapper .ds-hidden-text{
+  color: honeydew;
+}

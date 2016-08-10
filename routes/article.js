@@ -11,7 +11,7 @@ router
         res.json({id: req.params.id});
     })
     .get('/article/:id', function (req, res) {
-        res.json({id: req.params.id});
+        res.render('article');
     })
     .post('/article/', function (req, res) {
         res.json({id: req.param("id")});

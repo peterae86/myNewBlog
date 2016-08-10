@@ -9,6 +9,7 @@ module.exports = {
     ],
     //页面入口文件配置
     entry: {
+        article: './web/js/article.js',
         header: './web/js/header.js',
         editor: './web/js/editor.js'
     },
