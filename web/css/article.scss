@@ -8,26 +8,31 @@
 
 #articleBody {
   color: honeydew;
-  margin: 10px;
+  margin: 0px;
 }
 
 #articleTitle {
   text-align: center;
   font-size: xx-large;
-  margin-top: 20px;
+  padding-top: 20px;
   font-weight: 600;
   color: white;
 }
 
 #articleCreateTime {
   margin-top: 10px;
+  padding-bottom: 20px;
+  border-bottom: 1px honeydew solid;
   text-align: center;
   color: white;
+  width: 80%;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 #articleContent {
-  margin-top: 10px;
   line-height: 1.8;
+  margin: 10px;
 }
 
 code, kbd, pre, samp {
