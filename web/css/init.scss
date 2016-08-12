@@ -15,7 +15,6 @@ address, cite, dfn, em, var {
   font-style: normal;
 }
 
-
 small {
   font-size: 12px;
 }
@@ -57,4 +56,20 @@ html {
   height: 100%;
   margin: 0;
   padding: 0;
+  -webkit-font-smoothing: subpixel-antialiased;
+  font-family: Helvetica, Tahoma, Arial, STXihei, "华文细黑", "Microsoft YaHei", "微软雅黑", sans-serif;
 }
+
+$white: #FFFFFF;
+
+$red: #FF606E;
+
+$lightBlue: #00DDD8;
+
+$blue: #517398;
+
+$darkBlue: #262C3A;
+
+$darkBlue2: #2C3242;
+
+$yellow: #FFD700;
