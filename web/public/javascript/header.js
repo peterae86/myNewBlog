@@ -45,8 +45,8 @@
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	var css = __webpack_require__(70);
-	var Vue = __webpack_require__(5);
+	var css = __webpack_require__(82);
+	var Vue = __webpack_require__(6);
 
 	var dd = new Vue({
 	    el: '#test',
@@ -367,7 +367,7 @@
 
 /***/ },
 
-/***/ 5:
+/***/ 6:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, process) {/*!
@@ -10444,11 +10444,11 @@
 	}, 0);
 
 	module.exports = Vue;
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(6)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(7)))
 
 /***/ },
 
-/***/ 6:
+/***/ 7:
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -10587,13 +10587,13 @@
 
 /***/ },
 
-/***/ 70:
+/***/ 82:
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(71);
+	var content = __webpack_require__(83);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(4)(content, {});
@@ -10614,7 +10614,7 @@
 
 /***/ },
 
-/***/ 71:
+/***/ 83:
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(3)();
@@ -10622,7 +10622,7 @@
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\nbody, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td {\n  margin: 0;\n  padding: 0; }\n\naddress, cite, dfn, em, var {\n  font-style: normal; }\n\nsmall {\n  font-size: 12px; }\n\nsup {\n  vertical-align: text-top; }\n\nsub {\n  vertical-align: text-bottom; }\n\nlegend {\n  color: #000; }\n\nfieldset, img {\n  border: 0; }\n\nbutton, input, select, textarea {\n  font-size: 100%; }\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\nhtml {\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  -webkit-font-smoothing: subpixel-antialiased;\n  font-family: Helvetica, Tahoma, Arial, STXihei, \"\\534E\\6587\\7EC6\\9ED1\", \"Microsoft YaHei\", \"\\5FAE\\8F6F\\96C5\\9ED1\", sans-serif; }\n\nbody {\n  background: honeydew;\n  height: 100%; }\n\n@keyframes spin {\n  0% {\n    transform: rotate(0deg); }\n  100% {\n    transform: rotate(360deg); } }\n\n#headBackground {\n  width: 100%;\n  height: 150px;\n  background-color: #00DDD8;\n  margin-top: 0; }\n\n#header {\n  width: 300px;\n  height: 100%;\n  text-align: center;\n  background: #262C3A;\n  margin-right: 5px;\n  position: fixed; }\n\n#headImg {\n  width: 97px;\n  height: 97px;\n  border-radius: 97px;\n  border: 3px #262C3A solid;\n  background-image: url(\"http://wx.qlogo.cn/mmopen/ajNVdqHZLLB7iaCOVBwicIHPktt8ISjnhJs8UhXKbkooSIic9aJqOOOZ6ePw750tJPtpGUCsoeaNW1ubVT0O2Y3Zg/0\");\n  background-size: 100% 100%;\n  margin: 100px auto auto;\n  position: absolute;\n  left: 100px;\n  float: left; }\n  #headImg:hover {\n    animation: spin 800ms infinite linear; }\n\n#title {\n  display: inline-block;\n  font-size: x-large;\n  font-weight: bold;\n  margin-top: 80px;\n  color: #262C3A;\n  animation: xx 0.5s linear 1;\n  animation-delay: 0.2s;\n  animation-fill-mode: forwards; }\n\n.container {\n  overflow: hidden; }\n\n.category {\n  font-size: large;\n  font-weight: 700;\n  color: whitesmoke;\n  margin-top: 20px;\n  animation: yy 0.5s linear 1;\n  animation-delay: 0.7s;\n  animation-fill-mode: forwards;\n  transform: translateY(110%); }\n  .category:hover {\n    color: #FF606E; }\n\n#underline {\n  position: relative;\n  display: block;\n  overflow: hidden;\n  margin: 4px auto 0;\n  height: 3px;\n  width: 90%;\n  background: whitesmoke;\n  left: 0; }\n\n@keyframes xx {\n  from {\n    color: #262C3A; }\n  to {\n    color: whitesmoke; } }\n\n@keyframes yy {\n  from {\n    transform: translateY(110%); }\n  to {\n    transform: translateY(0%); } }\n\n#articleList {\n  margin-left: 305px;\n  background: #262C3A; }\n\n.articleItem {\n  color: whitesmoke;\n  border-left: 5px #00DDD8 solid;\n  padding: 10px 10px 0; }\n  .articleItem:hover {\n    background-color: #2C3242; }\n\n.articleTitle {\n  height: 50px;\n  font-size: large;\n  color: honeydew; }\n\n.articleAbstract {\n  font-size: medium;\n  border-bottom: 2px #2C3242 solid;\n  padding-bottom: 10px;\n  color: honeydew; }\n\n.time {\n  font-size: large;\n  border-left: 5px #FFD700 solid;\n  color: #FFD700;\n  padding-left: 10px;\n  padding-bottom: 5px;\n  padding-top: 5px; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\nbody, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td {\n  margin: 0;\n  padding: 0; }\n\naddress, cite, dfn, em, var {\n  font-style: normal; }\n\nsmall {\n  font-size: 12px; }\n\nsup {\n  vertical-align: text-top; }\n\nsub {\n  vertical-align: text-bottom; }\n\nlegend {\n  color: #000; }\n\nfieldset, img {\n  border: 0; }\n\nbutton, input, select, textarea {\n  font-size: 100%; }\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\nhtml {\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  -webkit-font-smoothing: subpixel-antialiased;\n  font-family: Helvetica, Tahoma, Arial, STXihei, \"\\534E\\6587\\7EC6\\9ED1\", \"Microsoft YaHei\", \"\\5FAE\\8F6F\\96C5\\9ED1\", sans-serif; }\n\nbody {\n  background: honeydew;\n  height: 100%; }\n\n@keyframes spin {\n  0% {\n    transform: rotate(0deg); }\n  100% {\n    transform: rotate(360deg); } }\n\n#headBackground {\n  width: 100%;\n  height: 150px;\n  background-color: #00DDD8;\n  margin-top: 0; }\n\n#header {\n  width: 300px;\n  height: 100%;\n  text-align: center;\n  background: #262C3A;\n  margin-right: 5px;\n  position: fixed; }\n\n#headImg {\n  width: 97px;\n  height: 97px;\n  border-radius: 97px;\n  border: 3px #262C3A solid;\n  background-image: url(\"http://wx.qlogo.cn/mmopen/ajNVdqHZLLB7iaCOVBwicIHPktt8ISjnhJs8UhXKbkooSIic9aJqOOOZ6ePw750tJPtpGUCsoeaNW1ubVT0O2Y3Zg/0\");\n  background-size: 100% 100%;\n  margin: 100px auto auto;\n  position: absolute;\n  left: 100px;\n  float: left; }\n  #headImg:hover {\n    animation: spin 800ms infinite linear; }\n\n#title {\n  display: inline-block;\n  font-size: x-large;\n  font-weight: bold;\n  margin-top: 80px;\n  color: #262C3A;\n  animation: xx 0.5s linear 1;\n  animation-delay: 0.2s;\n  animation-fill-mode: forwards; }\n\n.container {\n  overflow: hidden; }\n\n.category {\n  font-size: large;\n  font-weight: 700;\n  color: whitesmoke;\n  margin-top: 20px;\n  animation: yy 0.5s linear 1;\n  animation-delay: 0.7s;\n  animation-fill-mode: forwards;\n  transform: translateY(110%); }\n  .category:hover {\n    color: #FF606E; }\n\n#underline {\n  position: relative;\n  display: block;\n  overflow: hidden;\n  margin: 4px auto 0;\n  height: 3px;\n  width: 90%;\n  background: whitesmoke;\n  left: 0; }\n\n@keyframes xx {\n  from {\n    color: #262C3A; }\n  to {\n    color: whitesmoke; } }\n\n@keyframes yy {\n  from {\n    transform: translateY(110%); }\n  to {\n    transform: translateY(0%); } }\n\n#articleList {\n  margin-left: 305px;\n  background: #262C3A; }\n\n.articleItem {\n  color: whitesmoke;\n  border-left: 5px #00DDD8 solid;\n  padding: 10px 10px 0; }\n  .articleItem:hover {\n    background-color: #2C3242; }\n\n.articleTitle {\n  height: 50px;\n  font-size: large;\n  font-weight: 700;\n  color: honeydew; }\n\n.articleAbstract {\n  font-size: medium;\n  border-bottom: 2px #2C3242 solid;\n  padding-bottom: 10px;\n  color: honeydew; }\n\n.time {\n  font-size: large;\n  border-left: 5px #FFD700 solid;\n  color: #FFD700;\n  padding-left: 10px;\n  padding-bottom: 5px;\n  padding-top: 5px; }\n", ""]);
 
 	// exports
 

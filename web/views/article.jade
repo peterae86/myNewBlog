@@ -3,20 +3,22 @@ html
     head
         title= title
     body
-        div#header
-            div#headBackground
-                div#headImg
-            div
-                div#title="提莫的博客"
-                div.container
-                    div.category.
-                        首页
-                div.container
-                    div.category.
-                        归档
-                div.container
-                    div.category.
-                        关于
+        div#index.
+            <vue-scrollbar classes="my-scrollbar" v-bind:speed=100 >
+            <ul id="demo">
+                    <item
+                    class="item"
+                    :model="treeData">
+                     </item>
+            </ul>
+            <!-- the demo root element -->
+            <ul id="demo">
+                <item
+                class="item"
+                :model="treeData">
+                </item>
+            </ul>
+            </vue-scrollbar>
         div#article
             div#articleBody
                 div#articleTitle.

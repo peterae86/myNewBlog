@@ -23,7 +23,10 @@ module.exports = {
         loaders: [
             {test: /\.css$/, loader: 'style-loader!css-loader'},
             {test: /\.js$/, loader: 'jsx-loader?harmony'},
-            {test: /\.scss$/, loader: 'style!css!sass'},
+            {test: /\.(scss|sass)$/, loader: 'style!css!sass'},
+            {test: /\.html$/, loader: 'html'},
+            {test: /\.vue$/, loader: 'vue'},
+            {test: /\.json$/, loader: 'json'},
             {test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192'}
         ]
     }

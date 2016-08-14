@@ -55,3 +55,46 @@ h4, h5, h6 {
 a {
   color: $lightBlue;
 }
+
+#index {
+  width: 300px;
+  height: 100%;
+  background: $darkBlue;
+  margin-right: 5px;
+  position: fixed;
+}
+
+#index a {
+  color: honeydew;
+  text-decoration: none;
+  font-size: small;
+}
+
+.item {
+  cursor: pointer;
+  color: honeydew;
+}
+
+.bold {
+  font-size:medium;
+}
+
+ul {
+  padding-left: 1.5em;
+  line-height: 1.5em;
+  list-style-type: dot;
+}
+.my-scrollbar{
+  width: 35%;
+  min-width: 300px;
+  max-height: 100%;
+  background-color: $darkBlue !important;
+}
+
+/*The Content*/
+.scroll-me{
+  min-width: 750px;
+}
+.vue-scrollbar__scrollbar-vertical .scrollbar{
+  background: rgba($lightBlue,0.5) !important;
+}

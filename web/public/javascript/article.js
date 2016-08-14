@@ -45,11 +45,79 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var css = __webpack_require__(1);
-	var Vue = __webpack_require__(5);
+	var html = __webpack_require__(5);
+	var Vue = __webpack_require__(6);
+	var vueScrollbar = __webpack_require__(8);
+	// demo data
+	var data = {
+	    name: 'index',
+	    children: []
+	};
+	var ele = document.getElementById("articleContent");
 
-	var dd = new Vue({
-	    el: '#test',
-	    data: {test: "test"}
+	var lastH1 = null;
+	var lastH2 = null;
+
+	ele.childNodes.forEach(function (node) {
+	    if (node.localName == "h1") {
+	        lastH1 = {name: node.innerHTML, children: []};
+	        node.setAttribute("id", node.innerHTML);
+	        data.children.push(lastH1);
+	    }
+	    if (node.localName == "h2") {
+	        lastH2 = {name: node.innerHTML, children: []};
+	        node.setAttribute("id", node.innerHTML);
+	        lastH1 && lastH1.children.push(lastH2);
+	    }
+	    if (node.localName == "h3") {
+	        lastH2 && lastH2.children.push({name: node.innerHTML});
+	        node.setAttribute("id", node.innerHTML);
+	    }
+	});
+
+
+	// define the item component
+	Vue.component('item', {
+	    template: html,
+	    props: {
+	        model: Object
+	    },
+	    data: function () {
+	        return {
+	            open: true
+	        }
+	    },
+	    computed: {
+	        isFolder: function () {
+	            return this.model.children &&
+	                this.model.children.length
+	        }
+	    },
+	    methods: {
+	        toggle: function () {
+	            if (this.isFolder) {
+	                this.open = !this.open
+	            }
+	        },
+	        changeType: function () {
+	            if (!this.isFolder) {
+	                Vue.set(this.model, 'children', [])
+	                this.addChild()
+	                this.open = true
+	            }
+	        },
+	    }
+	})
+
+	// boot up the demo
+	var demo = new Vue({
+	    el: '#index',
+	    components:{
+	        'vue-scrollbar':vueScrollbar
+	    },
+	    data: {
+	        treeData: data
+	    }
 	});
 
 
@@ -89,7 +157,7 @@
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\nbody, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td {\n  margin: 0;\n  padding: 0; }\n\naddress, cite, dfn, em, var {\n  font-style: normal; }\n\nsmall {\n  font-size: 12px; }\n\nsup {\n  vertical-align: text-top; }\n\nsub {\n  vertical-align: text-bottom; }\n\nlegend {\n  color: #000; }\n\nfieldset, img {\n  border: 0; }\n\nbutton, input, select, textarea {\n  font-size: 100%; }\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\nhtml {\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  -webkit-font-smoothing: subpixel-antialiased;\n  font-family: Helvetica, Tahoma, Arial, STXihei, \"\\534E\\6587\\7EC6\\9ED1\", \"Microsoft YaHei\", \"\\5FAE\\8F6F\\96C5\\9ED1\", sans-serif; }\n\nbody {\n  background: honeydew;\n  height: 100%; }\n\n@keyframes spin {\n  0% {\n    transform: rotate(0deg); }\n  100% {\n    transform: rotate(360deg); } }\n\n#headBackground {\n  width: 100%;\n  height: 150px;\n  background-color: #00DDD8;\n  margin-top: 0; }\n\n#header {\n  width: 300px;\n  height: 100%;\n  text-align: center;\n  background: #262C3A;\n  margin-right: 5px;\n  position: fixed; }\n\n#headImg {\n  width: 97px;\n  height: 97px;\n  border-radius: 97px;\n  border: 3px #262C3A solid;\n  background-image: url(\"http://wx.qlogo.cn/mmopen/ajNVdqHZLLB7iaCOVBwicIHPktt8ISjnhJs8UhXKbkooSIic9aJqOOOZ6ePw750tJPtpGUCsoeaNW1ubVT0O2Y3Zg/0\");\n  background-size: 100% 100%;\n  margin: 100px auto auto;\n  position: absolute;\n  left: 100px;\n  float: left; }\n  #headImg:hover {\n    animation: spin 800ms infinite linear; }\n\n#title {\n  display: inline-block;\n  font-size: x-large;\n  font-weight: bold;\n  margin-top: 80px;\n  color: #262C3A;\n  animation: xx 0.5s linear 1;\n  animation-delay: 0.2s;\n  animation-fill-mode: forwards; }\n\n.container {\n  overflow: hidden; }\n\n.category {\n  font-size: large;\n  font-weight: 700;\n  color: whitesmoke;\n  margin-top: 20px;\n  animation: yy 0.5s linear 1;\n  animation-delay: 0.7s;\n  animation-fill-mode: forwards;\n  transform: translateY(110%); }\n  .category:hover {\n    color: #FF606E; }\n\n#underline {\n  position: relative;\n  display: block;\n  overflow: hidden;\n  margin: 4px auto 0;\n  height: 3px;\n  width: 90%;\n  background: whitesmoke;\n  left: 0; }\n\n@keyframes xx {\n  from {\n    color: #262C3A; }\n  to {\n    color: whitesmoke; } }\n\n@keyframes yy {\n  from {\n    transform: translateY(110%); }\n  to {\n    transform: translateY(0%); } }\n\n#article {\n  margin-left: 305px;\n  background: #262C3A;\n  border-left: 5px #00DDD8 solid; }\n\n#articleBody {\n  color: honeydew;\n  margin: 0px; }\n\n#articleTitle {\n  text-align: center;\n  font-size: xx-large;\n  padding-top: 20px;\n  font-weight: 600;\n  color: white; }\n\n#articleCreateTime {\n  margin-top: 10px;\n  padding-bottom: 20px;\n  border-bottom: 1px honeydew solid;\n  text-align: center;\n  color: white;\n  width: 80%;\n  margin-right: auto;\n  margin-left: auto; }\n\n#articleContent {\n  line-height: 1.8;\n  margin: 10px; }\n\ncode, kbd, pre, samp {\n  font-family: couriernew, courier, monospace;\n  background-color: #2C3242;\n  padding: 10px;\n  overflow: auto; }\n\nh1, h2, h3 {\n  color: #FFD700;\n  margin: 10px 0 10px; }\n\nh4, h5, h6 {\n  color: #FFD700; }\n\na {\n  color: #00DDD8; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\nbody, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td {\n  margin: 0;\n  padding: 0; }\n\naddress, cite, dfn, em, var {\n  font-style: normal; }\n\nsmall {\n  font-size: 12px; }\n\nsup {\n  vertical-align: text-top; }\n\nsub {\n  vertical-align: text-bottom; }\n\nlegend {\n  color: #000; }\n\nfieldset, img {\n  border: 0; }\n\nbutton, input, select, textarea {\n  font-size: 100%; }\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\nhtml {\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  -webkit-font-smoothing: subpixel-antialiased;\n  font-family: Helvetica, Tahoma, Arial, STXihei, \"\\534E\\6587\\7EC6\\9ED1\", \"Microsoft YaHei\", \"\\5FAE\\8F6F\\96C5\\9ED1\", sans-serif; }\n\nbody {\n  background: honeydew;\n  height: 100%; }\n\n@keyframes spin {\n  0% {\n    transform: rotate(0deg); }\n  100% {\n    transform: rotate(360deg); } }\n\n#headBackground {\n  width: 100%;\n  height: 150px;\n  background-color: #00DDD8;\n  margin-top: 0; }\n\n#header {\n  width: 300px;\n  height: 100%;\n  text-align: center;\n  background: #262C3A;\n  margin-right: 5px;\n  position: fixed; }\n\n#headImg {\n  width: 97px;\n  height: 97px;\n  border-radius: 97px;\n  border: 3px #262C3A solid;\n  background-image: url(\"http://wx.qlogo.cn/mmopen/ajNVdqHZLLB7iaCOVBwicIHPktt8ISjnhJs8UhXKbkooSIic9aJqOOOZ6ePw750tJPtpGUCsoeaNW1ubVT0O2Y3Zg/0\");\n  background-size: 100% 100%;\n  margin: 100px auto auto;\n  position: absolute;\n  left: 100px;\n  float: left; }\n  #headImg:hover {\n    animation: spin 800ms infinite linear; }\n\n#title {\n  display: inline-block;\n  font-size: x-large;\n  font-weight: bold;\n  margin-top: 80px;\n  color: #262C3A;\n  animation: xx 0.5s linear 1;\n  animation-delay: 0.2s;\n  animation-fill-mode: forwards; }\n\n.container {\n  overflow: hidden; }\n\n.category {\n  font-size: large;\n  font-weight: 700;\n  color: whitesmoke;\n  margin-top: 20px;\n  animation: yy 0.5s linear 1;\n  animation-delay: 0.7s;\n  animation-fill-mode: forwards;\n  transform: translateY(110%); }\n  .category:hover {\n    color: #FF606E; }\n\n#underline {\n  position: relative;\n  display: block;\n  overflow: hidden;\n  margin: 4px auto 0;\n  height: 3px;\n  width: 90%;\n  background: whitesmoke;\n  left: 0; }\n\n@keyframes xx {\n  from {\n    color: #262C3A; }\n  to {\n    color: whitesmoke; } }\n\n@keyframes yy {\n  from {\n    transform: translateY(110%); }\n  to {\n    transform: translateY(0%); } }\n\n#article {\n  margin-left: 305px;\n  background: #262C3A;\n  border-left: 5px #00DDD8 solid; }\n\n#articleBody {\n  color: honeydew;\n  margin: 0px; }\n\n#articleTitle {\n  text-align: center;\n  font-size: xx-large;\n  padding-top: 20px;\n  font-weight: 600;\n  color: white; }\n\n#articleCreateTime {\n  margin-top: 10px;\n  padding-bottom: 20px;\n  border-bottom: 1px honeydew solid;\n  text-align: center;\n  color: white;\n  width: 80%;\n  margin-right: auto;\n  margin-left: auto; }\n\n#articleContent {\n  line-height: 1.8;\n  margin: 10px; }\n\ncode, kbd, pre, samp {\n  font-family: couriernew, courier, monospace;\n  background-color: #2C3242;\n  padding: 10px;\n  overflow: auto; }\n\nh1, h2, h3 {\n  color: #FFD700;\n  margin: 10px 0 10px; }\n\nh4, h5, h6 {\n  color: #FFD700; }\n\na {\n  color: #00DDD8; }\n\n#index {\n  width: 300px;\n  height: 100%;\n  background: #262C3A;\n  margin-right: 5px;\n  position: fixed; }\n\n#index a {\n  color: honeydew;\n  text-decoration: none;\n  font-size: small; }\n\n.item {\n  cursor: pointer;\n  color: honeydew; }\n\n.bold {\n  font-size: medium; }\n\nul {\n  padding-left: 1.5em;\n  line-height: 1.5em;\n  list-style-type: dot; }\n\n.my-scrollbar {\n  width: 35%;\n  min-width: 300px;\n  max-height: 100%;\n  background-color: #262C3A !important; }\n\n/*The Content*/\n.scroll-me {\n  min-width: 750px; }\n\n.vue-scrollbar__scrollbar-vertical .scrollbar {\n  background: rgba(0, 221, 216, 0.5) !important; }\n", ""]);
 
 	// exports
 
@@ -404,6 +472,12 @@
 
 /***/ },
 /* 5 */
+/***/ function(module, exports) {
+
+	module.exports = "<li>\r\n    <a\r\n            :class=\"{bold: isFolder}\"\r\n            @click=\"toggle\"\r\n            @dblclick=\"changeType\"\r\n            href=\"#{{model.name}}\"\r\n    >\r\n        {{model.name}}\r\n        <span v-if=\"isFolder\">[{{open ? '-' : '+'}}]</span>\r\n    </a>\r\n    <ul v-show=\"open\" v-if=\"isFolder\">\r\n        <item\r\n                class=\"item\"\r\n                v-for=\"model in model.children\"\r\n                :model=\"model\">\r\n        </item>\r\n    </ul>\r\n</li>";
+
+/***/ },
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, process) {/*!
@@ -10480,10 +10554,10 @@
 	}, 0);
 
 	module.exports = Vue;
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(6)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(7)))
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -10619,6 +10693,585 @@
 	};
 	process.umask = function() { return 0; };
 
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(9)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] node_modules\\vue-scrollbar\\src\\js\\components\\vue-scrollbar.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(18)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
+	}
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  var id = "_v-633ffa92/vue-scrollbar.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _verticalScrollbar = __webpack_require__(10);
+
+	var _verticalScrollbar2 = _interopRequireDefault(_verticalScrollbar);
+
+	var _horizontalScrollbar = __webpack_require__(13);
+
+	var _horizontalScrollbar2 = _interopRequireDefault(_horizontalScrollbar);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	__webpack_require__(16);
+
+	exports.default = {
+
+	  props: {
+	    classes: {
+	      type: String,
+	      default: ""
+	    },
+	    speed: {
+	      type: Number,
+	      default: 53
+	    }
+	  },
+
+	  data: function data() {
+	    return {
+	      ready: false,
+	      scrollY: null,
+	      scrollX: null,
+	      top: 0,
+	      left: 0,
+	      scrollAreaHeight: null,
+	      scrollAreaWidth: null,
+	      scrollWrapperHeight: null,
+	      scrollWrapperWidth: null,
+	      verticalHeight: null,
+	      vMovement: 0,
+	      hMovement: 0,
+	      dragging: false,
+	      start: { y: 0, x: 0 }
+	    };
+	  },
+
+
+	  components: { verticalScrollbar: _verticalScrollbar2.default, horizontalScrollbar: _horizontalScrollbar2.default },
+
+	  methods: {
+	    scroll: function scroll(e) {
+	      e.preventDefault();
+
+	      var num = this.speed;
+
+	      var shifted = e.shiftKey;
+	      this.scrollY = e.deltaY > 0 ? num : -num;
+	      this.scrollX = e.deltaX > 0 ? num : -num;
+
+	      if (shifted && e.deltaX == 0) this.scrollX = e.deltaY > 0 ? num : -num;
+
+	      var nextY = this.top + this.scrollY;
+	      var nextX = this.left + this.scrollX;
+
+	      var canScrollY = this.scrollAreaHeight > this.scrollWrapperHeight;
+	      var canScrollX = this.scrollAreaWidth > this.scrollWrapperWidth;
+
+	      if (canScrollY && !shifted) {
+	        this.normalizeVertical(nextY);
+	        this.moveTheScrollbar();
+	      }
+
+	      if (shifted && canScrollX) {
+	        this.normalizeHorizontal(nextX);
+	        this.moveTheScrollbar();
+	      }
+	    },
+	    startDrag: function startDrag(e) {
+
+	      e.preventDefault();
+	      e.stopPropagation();
+
+	      e = e.changedTouches ? e.changedTouches[0] : e;
+
+	      this.dragging = true;
+	      this.start.y = e.pageY;
+	      this.start.x = e.pageX;
+	    },
+	    onDrag: function onDrag(e) {
+
+	      if (this.dragging) {
+
+	        e.preventDefault();
+	        e = e.changedTouches ? e.changedTouches[0] : e;
+
+	        var yMovement = this.start.y - e.pageY;
+	        var xMovement = this.start.x - e.pageX;
+
+	        this.start.y = e.pageY;
+	        this.start.x = e.pageX;
+
+	        var nextY = this.top + yMovement;
+	        var nextX = this.left + xMovement;
+
+	        this.normalizeVertical(nextY);
+	        this.normalizeHorizontal(nextX);
+
+	        this.moveTheScrollbar();
+	      }
+	    },
+	    stopDrag: function stopDrag(e) {
+	      this.dragging = false;
+	    },
+	    normalizeVertical: function normalizeVertical(nextY) {
+	      var lowerEnd = this.scrollAreaHeight - this.scrollWrapperHeight;
+
+	      if (nextY > lowerEnd) nextY = lowerEnd;else if (nextY < 0) nextY = 0;
+
+	      this.top = nextY;
+	    },
+	    normalizeHorizontal: function normalizeHorizontal(next) {
+	      var rightEnd = this.scrollAreaWidth - this.scrollWrapperWidth;
+
+	      if (next > rightEnd) next = rightEnd;else if (next < 0) next = 0;
+
+	      this.left = next;
+	    },
+	    moveTheScrollbar: function moveTheScrollbar() {
+	      this.vMovement = this.top / this.scrollAreaHeight * 100;
+	      this.hMovement = this.left / this.scrollAreaWidth * 100;
+	    },
+	    handleChangePosition: function handleChangePosition(vScrollbar, orientation) {
+	      var next = vScrollbar / 100 * this.scrollAreaHeight;
+	      if (orientation == 'vertical') this.normalizeVertical(next);
+	      if (orientation == 'horizontal') this.normalizeHorizontal(next);
+	    },
+	    calculateSize: function calculateSize() {
+	      var $scrollArea = this.$els.scrollArea;
+	      var $scrollWrapper = this.$els.scrollWrapper;
+
+	      var scrollWrapperStyle = window.getComputedStyle($scrollWrapper, null);
+
+	      this.scrollAreaHeight = $scrollArea.children[0].clientHeight;
+	      this.scrollAreaWidth = $scrollArea.children[0].clientWidth;
+
+	      this.scrollWrapperHeight = parseFloat(scrollWrapperStyle.height);
+	      this.scrollWrapperWidth = parseFloat(scrollWrapperStyle.width);
+
+	      this.ready = true;
+	    }
+	  },
+
+	  ready: function ready() {
+	    this.calculateSize();
+
+	    window.addEventListener('resize', this.calculateSize);
+	  },
+	  beforeDestroy: function beforeDestroy() {
+	    window.removeEventListener('resize', this.calculateSize);
+	  }
+	};
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(11)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] node_modules\\vue-scrollbar\\src\\js\\components\\vertical-scrollbar.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(12)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
+	}
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  var id = "_v-07cd32a7/vertical-scrollbar.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 11 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = {
+
+	  props: {
+	    area: {
+	      type: Object,
+	      default: 0
+	    },
+	    wrapper: {
+	      type: Object,
+	      default: 0
+	    },
+	    scrolling: {
+	      type: Object,
+	      default: { v: 0, h: 0 }
+	    },
+	    draggingFromParent: {
+	      type: Boolean,
+	      default: false
+	    },
+	    onChangePosition: {
+	      type: Function,
+	      default: function _default() {}
+	    }
+	  },
+
+	  data: function data() {
+	    return {
+	      height: 0,
+	      dragging: false,
+	      start: 0
+	    };
+	  },
+
+
+	  watch: {
+	    'wrapper.height': function wrapperHeight(val, old) {
+	      if (val != old) this.calculateSize();
+	    }
+	  },
+
+	  methods: {
+	    startDrag: function startDrag(e) {
+
+	      e.preventDefault();
+	      e.stopPropagation();
+
+	      e = e.changedTouches ? e.changedTouches[0] : e;
+
+	      this.dragging = true;
+	      this.start = e.pageY;
+	    },
+	    onDrag: function onDrag(e) {
+
+	      if (this.dragging) {
+
+	        e.preventDefault();
+	        e.stopPropagation();
+
+	        e = e.changedTouches ? e.changedTouches[0] : e;
+
+	        var yMovement = e.pageY - this.start;
+	        var yMovementPercentage = yMovement / this.wrapper.height * 100;
+
+	        this.start = e.pageY;
+
+	        var next = this.scrolling.v + yMovementPercentage;
+
+	        this.normalize(next);
+
+	        this.$parent.dragging = true;
+
+	        this.onChangePosition(next, 'vertical');
+	      }
+	    },
+	    stopDrag: function stopDrag(e) {
+	      this.dragging = false;
+
+	      this.$parent.dragging = false;
+	    },
+	    jump: function jump(e) {
+
+	      var isContainer = e.target === this.$els.container;
+	      if (isContainer) {
+	        var position = this.$els.scrollbar.getBoundingClientRect();
+
+	        var yMovement = e.pageY - position.top;
+	        var centerize = this.height / 2;
+	        var yMovementPercentage = yMovement / this.wrapper.height * 100 - centerize;
+
+	        this.start = e.pageY;
+
+	        var next = this.scrolling.v + yMovementPercentage;
+
+	        this.normalize(next);
+	        this.onChangePosition(next, 'vertical');
+	      }
+	    },
+	    normalize: function normalize(next) {
+	      var lowerEnd = 100 - this.height;
+	      if (next < 0) next = 0;
+	      if (next > lowerEnd) next = lowerEnd;
+	      this.scrolling.v = next;
+	    },
+	    calculateSize: function calculateSize() {
+	      this.height = this.wrapper.height / this.area.height * 100;
+	    }
+	  },
+
+	  ready: function ready() {
+	    this.calculateSize();
+
+	    document.addEventListener("mousemove", this.onDrag);
+	    document.addEventListener("touchmove", this.onDrag);
+	    document.addEventListener("mouseup", this.stopDrag);
+	    document.addEventListener("touchend", this.stopDrag);
+	  },
+	  beforeDestroy: function beforeDestroy() {
+	    document.removeEventListener("mousemove", this.onDrag);
+	    document.removeEventListener("touchmove", this.onDrag);
+	    document.removeEventListener("mouseup", this.stopDrag);
+	    document.removeEventListener("touchend", this.stopDrag);
+	  }
+	};
+
+/***/ },
+/* 12 */
+/***/ function(module, exports) {
+
+	module.exports = "<div v-if=\"height &lt; 100\" @click=\"jump\" v-el:container=\"v-el:container\" class=\"vue-scrollbar__scrollbar-vertical\"><div v-bind:class=\"dragging || draggingFromParent ? '' : 'vue-scrollbar-transition'\" v-el:scrollbar=\"v-el:scrollbar\" @touchstart=\"startDrag\" @mousedown=\"startDrag\" v-bind:style=\"{ height: height+'%', top: scrolling.v + '%' }\" class=\"scrollbar\"></div></div>";
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(14)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] node_modules\\vue-scrollbar\\src\\js\\components\\horizontal-scrollbar.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(15)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
+	}
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  var id = "_v-50eaced5/horizontal-scrollbar.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 14 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = {
+
+	  props: {
+	    area: {
+	      type: Object,
+	      default: 0
+	    },
+	    wrapper: {
+	      type: Object,
+	      default: 0
+	    },
+	    scrolling: {
+	      type: Object,
+	      default: { v: 0, h: 0 }
+	    },
+	    draggingFromParent: {
+	      type: Boolean,
+	      default: false
+	    },
+	    onChangePosition: {
+	      type: Function,
+	      default: function _default() {}
+	    }
+	  },
+
+	  data: function data() {
+	    return {
+	      width: 0,
+	      dragging: false,
+	      start: 0
+	    };
+	  },
+
+
+	  watch: {
+	    'wrapper.width': function wrapperWidth(val, old) {
+	      if (val != old) this.calculateSize();
+	    }
+	  },
+
+	  methods: {
+	    startDrag: function startDrag(e) {
+
+	      e.preventDefault();
+	      e.stopPropagation();
+
+	      e = e.changedTouches ? e.changedTouches[0] : e;
+
+	      this.dragging = true;
+	      this.start = e.pageX;
+	    },
+	    onDrag: function onDrag(e) {
+
+	      if (this.dragging) {
+
+	        e.preventDefault();
+	        e.stopPropagation();
+
+	        e = e.changedTouches ? e.changedTouches[0] : e;
+
+	        var xMovement = e.pageX - this.start;
+	        var xMovementPercentage = xMovement / this.wrapper.width * 100;
+
+	        this.start = e.pageX;
+
+	        var next = this.scrolling.h + xMovementPercentage;
+
+	        this.normalize(next);
+
+	        this.$parent.dragging = true;
+
+	        this.onChangePosition(next, 'horizontal');
+	      }
+	    },
+	    stopDrag: function stopDrag(e) {
+	      this.dragging = false;
+
+	      this.$parent.dragging = false;
+	    },
+	    jump: function jump(e) {
+
+	      var isContainer = e.target === this.$els.container;
+	      if (isContainer) {
+	        var position = this.$els.scrollbar.getBoundingClientRect();
+
+	        var xMovement = e.pageX - position.left;
+
+	        var centerize = this.width / 2;
+	        var xMovementPercentage = xMovement / this.wrapper.width * 100 - centerize;
+
+	        this.start = e.pageX;
+
+	        var next = this.scrolling.h + xMovementPercentage;
+
+	        this.normalize(next);
+	        this.onChangePosition(next, 'horizontal');
+	      }
+	    },
+	    normalize: function normalize(next) {
+	      var lowerEnd = 100 - this.width;
+	      if (next < 0) next = 0;
+	      if (next > lowerEnd) next = lowerEnd;
+	      this.scrolling.h = next;
+	    },
+	    calculateSize: function calculateSize() {
+	      this.width = this.wrapper.width / this.area.width * 100;
+	    }
+	  },
+
+	  ready: function ready() {
+	    this.calculateSize();
+
+	    document.addEventListener("mousemove", this.onDrag);
+	    document.addEventListener("touchmove", this.onDrag);
+	    document.addEventListener("mouseup", this.stopDrag);
+	    document.addEventListener("touchend", this.stopDrag);
+	  },
+	  beforeDestroy: function beforeDestroy() {
+	    document.addEventListener("mousemove", this.onDrag);
+	    document.addEventListener("touchmove", this.onDrag);
+	    document.addEventListener("mouseup", this.stopDrag);
+	    document.addEventListener("touchend", this.stopDrag);
+	  }
+	};
+
+/***/ },
+/* 15 */
+/***/ function(module, exports) {
+
+	module.exports = "<div v-if=\"width &lt; 100\" @click=\"jump\" v-el:container=\"v-el:container\" class=\"vue-scrollbar__scrollbar-horizontal\"><div v-bind:class=\"dragging || draggingFromParent ? '' : 'vue-scrollbar-transition'\" v-el:scrollbar=\"v-el:scrollbar\" @touchstart=\"startDrag\" @mousedown=\"startDrag\" v-bind:style=\"{ width: width+'%', left: scrolling.h + '%' }\" class=\"scrollbar\"></div></div>";
+
+/***/ },
+/* 16 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(17);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(4)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../css-loader/index.js!./../../../sass-loader/index.js!./_Scrollbar.sass", function() {
+				var newContent = require("!!./../../../css-loader/index.js!./../../../sass-loader/index.js!./_Scrollbar.sass");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 17 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(3)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".vue-scrollbar-transition, .vue-scrollbar__scrollbar-vertical, .vue-scrollbar__scrollbar-horizontal {\n  transition: all 0.5s ease;\n  -moz-transition: all 0.5s ease;\n  -webkit-transition: all 0.5s ease;\n  -o-transition: all 0.5s ease; }\n  .vue-scrollbar-transition--scrollbar {\n    transition: opacity 0.5s linear;\n    -moz-transition: opacity 0.5s linear;\n    -webkit-transition: opacity 0.5s linear;\n    -o-transition: opacity 0.5s linear; }\n\n.vue-scrollbar__wrapper {\n  margin: 0 auto;\n  overflow: hidden;\n  position: relative;\n  background: white; }\n  .vue-scrollbar__wrapper:hover .vue-scrollbar__scrollbar-vertical, .vue-scrollbar__wrapper:hover .vue-scrollbar__scrollbar-horizontal {\n    opacity: 1; }\n\n.vue-scrollbar__scrollbar-vertical, .vue-scrollbar__scrollbar-horizontal {\n  opacity: 0.5;\n  position: absolute;\n  background: transparent; }\n  .vue-scrollbar__scrollbar-vertical:hover, .vue-scrollbar__scrollbar-horizontal:hover {\n    background: rgba(0, 0, 0, 0.3); }\n  .vue-scrollbar__scrollbar-vertical .scrollbar, .vue-scrollbar__scrollbar-horizontal .scrollbar {\n    position: relative;\n    background: rgba(0, 0, 0, 0.5);\n    cursor: default; }\n\n.vue-scrollbar__scrollbar-vertical {\n  width: 10px;\n  height: 100%;\n  top: 0;\n  right: 0; }\n  .vue-scrollbar__scrollbar-vertical .scrollbar {\n    width: 10px; }\n\n.vue-scrollbar__scrollbar-horizontal {\n  height: 10px;\n  width: 100%;\n  bottom: 0;\n  right: 0; }\n  .vue-scrollbar__scrollbar-horizontal .scrollbar {\n    height: 10px; }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 18 */
+/***/ function(module, exports) {
+
+	module.exports = "<div v-el:scroll-wrapper=\"v-el:scroll-wrapper\" v-bind:class=\"classes ? ' ' + classes : ''\" class=\"vue-scrollbar__wrapper\"><div @wheel=\"scroll\" v-el:scroll-area=\"v-el:scroll-area\" @touchstart=\"startDrag\" @touchmove=\"onDrag\" @touchend=\"stopDrag\" v-bind:class=\"(dragging ? '' : 'vue-scrollbar-transition')\" v-bind:style=\"{ 'margin-top': top * -1 +'px', 'margin-left': left * -1 +'px' }\" class=\"vue-scrollbar__area\"><slot></slot></div><vertical-scrollbar v-if=\"ready\" v-bind:area=\"{ height: scrollAreaHeight }\" v-bind:wrapper=\"{ height: scrollWrapperHeight }\" v-bind:scrolling=\"{ v: vMovement }\" v-bind:dragging-from-parent=\"dragging\" v-bind:on-change-position=\"handleChangePosition\"></vertical-scrollbar><horizontal-scrollbar v-if=\"ready\" v-bind:area=\"{ width: scrollAreaWidth }\" v-bind:wrapper=\"{ width: scrollWrapperWidth }\" v-bind:scrolling=\"{ h: hMovement }\" v-bind:dragging-from-parent=\"dragging\" v-bind:on-change-position=\"handleChangePosition\"></horizontal-scrollbar></div>";
 
 /***/ }
 /******/ ]);
