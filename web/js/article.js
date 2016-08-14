@@ -7,7 +7,7 @@ var data = {
     name: 'index',
     children: []
 };
-var ele = document.getElementById("articleContent");
+var ele = document.getElementById("view");
 
 var lastH1 = null;
 var lastH2 = null;
@@ -61,7 +61,7 @@ Vue.component('item', {
             }
         },
     }
-})
+});
 
 // boot up the demo
 var demo = new Vue({

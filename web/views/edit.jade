@@ -1,4 +1,26 @@
-div#editor.
-    <textarea v-model="input" debounce="300"></textarea>
-    <div id="view" v-html="input | marked"></div>
+div#editor
+    div#index.
+        <vue-scrollbar classes="my-scrollbar" v-bind:speed=100 >
+        <ul id="demo">
+        <item
+        class="item"
+        :model="input | marked | indexed">
+            </item>
+        </ul>
+        </vue-scrollbar>
+    div#view(v-html="input | marked")
+    div#write
+        div
+            label="标题:"
+                input#title(name="title")
+        div
+            label="摘要:"
+                input#abstract(name="abstract")
+        div
+            label="标签:"
+                input#tags(name="tags")
+        div
+            input#save(type="button",value="保存")
+            input#publish(type="button",value="发布")
+        textarea(v-model="input" debounce="300")
 script(type="text/javascript" src="/javascript/editor.js")

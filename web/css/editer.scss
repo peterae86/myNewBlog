@@ -1,13 +1,8 @@
-//html, body, #editor {
-//  margin: 0;
-//  height: 100%;
-//  font-family: 'Helvetica Neue', Arial, sans-serif;
-//  color: #333;
-//}
-//
-textarea,#view {
+@import "init";
+
+#write, #view {
   display: inline-block;
-  width: 49%;
+  width: 40%;
   height: 100%;
   vertical-align: top;
   -webkit-box-sizing: border-box;
@@ -16,7 +11,23 @@ textarea,#view {
   padding: 0 20px;
 }
 
+#view {
+  background-color: $darkBlue;
+  overflow: scroll;
+  color: honeydew;
+}
+
+#index {
+  display: inline-block;
+  background: $darkBlue;
+  border-right: 1px solid honeydew;
+  width: 19%;
+  height: 100%;
+}
+
 textarea {
+  width: 100%;
+  height: 100%;
   border: none;
   border-right: 1px solid #ccc;
   resize: none;
@@ -25,4 +36,55 @@ textarea {
   font-size: 14px;
   font-family: 'Monaco', courier, monospace;
   padding: 20px;
+}
+
+h1, h2, h3 {
+  color: $yellow;
+  margin: 10px 0 10px;
+}
+
+h4, h5, h6 {
+  //font-size: 100%;
+  color: $yellow;
+}
+
+#view a {
+  color: $lightBlue;
+}
+
+#index a {
+  color: honeydew;
+  text-decoration: none;
+}
+
+.item {
+  cursor: pointer;
+  color: honeydew;
+  background: $darkBlue;
+}
+
+.bold {
+  font-size: medium;
+}
+
+ul {
+  padding-left: 1.5em;
+  line-height: 1.5em;
+  list-style-type: dot;
+}
+
+.my-scrollbar {
+  width: 35%;
+  min-width: 100%;
+  max-height: 100%;
+  background-color: $darkBlue !important;
+}
+
+/*The Content*/
+.scroll-me {
+  min-width: 750px;
+}
+
+.vue-scrollbar__scrollbar-vertical .scrollbar {
+  background: rgba($lightBlue, 0.5) !important;
 }

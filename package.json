@@ -21,6 +21,7 @@
     "html-loader": "^0.4.3",
     "install": "^0.8.1",
     "jade": "~1.11.0",
+    "jquery": "^3.1.0",
     "json-loader": "^0.5.4",
     "jsx-loader": "0.13.2",
     "morgan": "~1.7.0",
