@@ -4,6 +4,8 @@ create table article(
       `abstract` TEXT,
       `markedContent` TEXT,
       `parsedContent` TEXT,
+      `isPublish` BOOLEAN ,
+      `tags` TEXT,
       `createTime` datetime
   );
 

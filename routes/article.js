@@ -17,15 +17,18 @@ router.get('/article/tags', function (req, resp) {
     resp.json({count: 1})
 });
 
+router.post('/article/edit', function (req, resp) {
+    articleService.save(req.body);
+    resp.json({status: 200})
+});
+
 
 router
     .get('/article/new', function (req, resp) {
         resp.render('edit', {title: '施工中'});
     })
     .get('/article/edit/:id', function (req, resp) {
-
-
-        resp.json({id: req.params.id});
+        resp.render('edit', {id: req.params.id});
     })
     .get('/article/:id', function (req, resp) {
         resp.render('article');

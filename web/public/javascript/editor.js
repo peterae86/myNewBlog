@@ -50,7 +50,8 @@
 	var md = new Remarkable('commonmark');
 	var html = __webpack_require__(5);
 	var vueScrollbar = __webpack_require__(8);
-	var $ = __webpack_require__(82).jQuery;
+	var $ = __webpack_require__(85);
+
 	// define the item component
 	Vue.component('item', {
 	    template: html,
@@ -84,7 +85,7 @@
 	});
 	var reg = /<h[1-3]>.*?<\/h[1-3]>/g;
 
-	new Vue({
+	var vue = new Vue({
 	    el: '#editor',
 	    data: {
 	        input: '# hello'
@@ -117,17 +118,50 @@
 	                    lastH1 && lastH1.children.push(lastH2);
 	                }
 	                if (node.indexOf("<h3>") != -1) {
-	                    lastH2 && lastH2.children.push({name:value});
+	                    lastH2 && lastH2.children.push({name: value});
 	                }
 	            });
 	            return data;
 	        }
 	    }
 	});
-	console.log($);
-	$('#save').onclick(function () {
-	   console.log(1);
+	console.log(vue);
+	$('#save').click(function () {
+	    var data = {};
+	    data['id'] = $("[name=id]").val();
+	    data['title'] = $("[name=title]").val();
+	    data['abstract'] = $("[name=abstract]").val();
+	    data['tags'] = $("[name=tags]").val();
+	    data['markedContent'] = vue.input;
+	    data['parsedContent'] = $("#view").html();
+	    data['isPublish'] = false;
+	    $.post('/article/edit', data, function (resp) {
+	        if (resp.status != 200) {
+	            alert(resp.msg);
+	        } else {
+	            location.href = '/article/saved'
+	        }
+	    }, 'json');
 	});
+
+	$('#publish').click(function () {
+	    var data = {};
+	    data['id'] = $("[name=id]").val();
+	    data['title'] = $("[name=title]").val();
+	    data['abstract'] = $("[name=abstract]").val();
+	    data['tags'] = $("[name=tags]").val();
+	    data['markedContent'] = vue.input;
+	    data['parsedContent'] = $("#view").html();
+	    data['isPublish'] = true;
+	    $.post('/article/edit', data, function (resp) {
+	        if (resp.status != 200) {
+	            alert(resp.msg);
+	        } else {
+	            location.href = '/'
+	        }
+	    }, 'json');
+	});
+
 
 
 
@@ -21646,7 +21680,10 @@
 
 
 /***/ },
-/* 82 */
+/* 82 */,
+/* 83 */,
+/* 84 */,
+/* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*eslint-disable no-unused-vars*/

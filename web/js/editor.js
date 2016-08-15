@@ -4,7 +4,8 @@ var Remarkable = require('remarkable');
 var md = new Remarkable('commonmark');
 var html = require("../html/tree.html");
 var vueScrollbar = require("vue-scrollbar");
-var $ = require("jquery").jQuery;
+var $ = require("jQuery");
+
 // define the item component
 Vue.component('item', {
     template: html,
@@ -38,7 +39,7 @@ Vue.component('item', {
 });
 var reg = /<h[1-3]>.*?<\/h[1-3]>/g;
 
-new Vue({
+var vue = new Vue({
     el: '#editor',
     data: {
         input: '# hello'
@@ -71,17 +72,50 @@ new Vue({
                     lastH1 && lastH1.children.push(lastH2);
                 }
                 if (node.indexOf("<h3>") != -1) {
-                    lastH2 && lastH2.children.push({name:value});
+                    lastH2 && lastH2.children.push({name: value});
                 }
             });
             return data;
         }
     }
 });
-console.log($);
-$('#save').onclick(function () {
-   console.log(1);
+console.log(vue);
+$('#save').click(function () {
+    var data = {};
+    data['id'] = $("[name=id]").val();
+    data['title'] = $("[name=title]").val();
+    data['abstract'] = $("[name=abstract]").val();
+    data['tags'] = $("[name=tags]").val();
+    data['markedContent'] = vue.input;
+    data['parsedContent'] = $("#view").html();
+    data['isPublish'] = false;
+    $.post('/article/edit', data, function (resp) {
+        if (resp.status != 200) {
+            alert(resp.msg);
+        } else {
+            location.href = '/article/saved'
+        }
+    }, 'json');
 });
+
+$('#publish').click(function () {
+    var data = {};
+    data['id'] = $("[name=id]").val();
+    data['title'] = $("[name=title]").val();
+    data['abstract'] = $("[name=abstract]").val();
+    data['tags'] = $("[name=tags]").val();
+    data['markedContent'] = vue.input;
+    data['parsedContent'] = $("#view").html();
+    data['isPublish'] = true;
+    $.post('/article/edit', data, function (resp) {
+        if (resp.status != 200) {
+            alert(resp.msg);
+        } else {
+            location.href = '/'
+        }
+    }, 'json');
+});
+
 
 
 
