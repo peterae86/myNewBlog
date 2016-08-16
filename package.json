@@ -38,6 +38,7 @@
     "vue-loader": "^8.5.3",
     "vue-scrollbar": "^1.0.4",
     "webpack": "^1.13.1",
-    "jQuery": "latest"
+    "jQuery": "latest",
+    "promise": "latest"
   }
 }

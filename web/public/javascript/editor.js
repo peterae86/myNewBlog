@@ -50,7 +50,7 @@
 	var md = new Remarkable('commonmark');
 	var html = __webpack_require__(5);
 	var vueScrollbar = __webpack_require__(8);
-	var $ = __webpack_require__(85);
+	var $ = __webpack_require__(82);
 
 	// define the item component
 	Vue.component('item', {
@@ -128,7 +128,9 @@
 	console.log(vue);
 	$('#save').click(function () {
 	    var data = {};
-	    data['id'] = $("[name=id]").val();
+	    if($("[name=id]").val()) {
+	        data['id'] = $("[name=id]").val();
+	    }
 	    data['title'] = $("[name=title]").val();
 	    data['abstract'] = $("[name=abstract]").val();
 	    data['tags'] = $("[name=tags]").val();
@@ -146,7 +148,9 @@
 
 	$('#publish').click(function () {
 	    var data = {};
-	    data['id'] = $("[name=id]").val();
+	    if($("[name=id]").val()) {
+	        data['id'] = $("[name=id]").val();
+	    }
 	    data['title'] = $("[name=title]").val();
 	    data['abstract'] = $("[name=abstract]").val();
 	    data['tags'] = $("[name=tags]").val();
@@ -21680,10 +21684,7 @@
 
 
 /***/ },
-/* 82 */,
-/* 83 */,
-/* 84 */,
-/* 85 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*eslint-disable no-unused-vars*/

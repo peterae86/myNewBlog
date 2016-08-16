@@ -82,7 +82,9 @@ var vue = new Vue({
 console.log(vue);
 $('#save').click(function () {
     var data = {};
-    data['id'] = $("[name=id]").val();
+    if($("[name=id]").val()) {
+        data['id'] = $("[name=id]").val();
+    }
     data['title'] = $("[name=title]").val();
     data['abstract'] = $("[name=abstract]").val();
     data['tags'] = $("[name=tags]").val();
@@ -100,7 +102,9 @@ $('#save').click(function () {
 
 $('#publish').click(function () {
     var data = {};
-    data['id'] = $("[name=id]").val();
+    if($("[name=id]").val()) {
+        data['id'] = $("[name=id]").val();
+    }
     data['title'] = $("[name=title]").val();
     data['abstract'] = $("[name=abstract]").val();
     data['tags'] = $("[name=tags]").val();

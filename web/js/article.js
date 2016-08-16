@@ -7,8 +7,8 @@ var data = {
     name: 'index',
     children: []
 };
-var ele = document.getElementById("view");
-
+var ele = document.getElementById("articleContent");
+debugger
 var lastH1 = null;
 var lastH2 = null;
 
