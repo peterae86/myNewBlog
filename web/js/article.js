@@ -8,7 +8,7 @@ var data = {
     children: []
 };
 var ele = document.getElementById("articleContent");
-debugger
+
 var lastH1 = null;
 var lastH2 = null;
 

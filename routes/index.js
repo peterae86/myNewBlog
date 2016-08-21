@@ -24,9 +24,4 @@ router.get('/', function (req, res, next) {
     res.render('header', {title: '施工中'});
 });
 
-router.get('/no_server_push', function (req, res, next) {
-    res.render('header', {title: '施工中'});
-});
-
-
 module.exports = router;

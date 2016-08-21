@@ -2,9 +2,14 @@ var db = require('../repo/db');
 
 var articleService = module.exports = {};
 
-articleService.query = function (num, id, isPublish) {
-    return db.all("select * from article where id<:id and isPublish=:isPublish order by id desc limit :num",
-        {":id": id, ":num": num, ":isPublish": isPublish});
+articleService.query = function (num, id, isLogin) {
+    if (isLogin) {
+        return db.all("select * from article where id<:id order by id desc limit :num",
+            {":id": id, ":num": num});
+    } else {
+        return db.all("select * from article where id<:id and isPublish=:isPublish order by id desc limit :num",
+            {":id": id, ":num": num, ":isPublish": true});
+    }
 };
 
 articleService.queryById = function (id) {

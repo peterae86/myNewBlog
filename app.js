@@ -9,6 +9,7 @@ var fs = require("fs");
 var http = require("http");
 var url = require("url");
 var net = require("net");
+var config = require("./config");
 var app = express();
 
 // view engine setup
@@ -21,6 +22,12 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
+app.use(function (req, res, next) {
+    if (req.cookies.username == config.argv.username && req.cookies.password == config.argv.password + "") {
+        req.isLogin = true;
+    }
+    next();
+});
 fs.readdirSync('./routes').forEach(function (file) {
     app.use('/', require('./routes/' + file))
 });

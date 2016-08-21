@@ -1,0 +1,8 @@
+extends layout
+
+block content
+    form(action="/login" method="post")
+        input#username(type="text",name="username")
+        input#password(type="password",name="password")
+        input#publish(type="submit",value="登录")
+

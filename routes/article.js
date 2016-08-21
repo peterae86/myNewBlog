@@ -6,7 +6,7 @@ var articleService = require('../service/articleService');
 router.get('/article/list', function (req, resp) {
     var num = req.query.num;
     var id = req.query.id;
-    articleService.query(num, id, true).then(function (res) {
+    articleService.query(num, id, req.isLogin).then(function (res) {
         resp.json({
             status: 200,
             msg: null,
@@ -17,35 +17,36 @@ router.get('/article/list', function (req, resp) {
     });
 });
 
-router.get('/article/private', function (req, resp) {
-    var num = req.query.num;
-    var id = req.query.id;
-    articleService.query(num, id, false).then(function (res) {
-        resp.json({
-            status: 200,
-            msg: null,
-            data: res
-        })
-    });
-});
-
 router.get('/article/tags', function (req, resp) {
     resp.json({count: 1})
 });
 
 router.post('/article/edit', function (req, resp) {
-    console.log(req.params);
-    console.log(req.body);
+    if(req.isLogin){
+        throw new Error();
+    }
     articleService.save(req.body);
     resp.json({status: 200})
 });
 
 router
     .get('/article/new', function (req, resp) {
+        if(req.isLogin){
+            throw new Error();
+        }
         resp.render('edit', {title: '施工中', id: ""});
     })
     .get('/article/edit/:id', function (req, resp) {
-        resp.render('edit', {id: req.params.id});
+        if(req.isLogin){
+            throw new Error();
+        }
+        articleService.queryById(req.params.id).then(function (res) {
+            if (res) {
+                resp.render('edit', {id: req.params.id});
+            } else {
+                throw Error("no article");
+            }
+        });
     })
     .get('/article/:id', function (req, resp) {
         articleService.queryById(req.params.id).then(function (res) {
@@ -56,9 +57,6 @@ router
             }
         });
     })
-    .post('/article/', function (req, resp) {
-        resp.json({id: req.param("id")});
-    });
 
 
 module.exports = router;
