@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var articleService = require('../service/articleService');
+var pushService = require("../service/pushService.js");
 
 /* GET home page. */
 router.get('/article/list', function (req, resp) {
@@ -49,6 +50,7 @@ router
         });
     })
     .get('/article/:id', function (req, resp) {
+        pushService.push('/javascript/article.js', resp);
         articleService.queryById(req.params.id).then(function (res) {
             if (res) {
                 resp.render('article', {article:res});
