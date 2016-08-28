@@ -88,7 +88,7 @@
 	var vue = new Vue({
 	    el: '#editor',
 	    data: {
-	        input: '# hello'
+	        input: content
 	    },
 	    components: {
 	        'vue-scrollbar': vueScrollbar
@@ -125,7 +125,6 @@
 	        }
 	    }
 	});
-	console.log(vue);
 	$('#save').click(function () {
 	    var data = {};
 	    if($("[name=id]").val()) {
@@ -141,7 +140,7 @@
 	        if (resp.status != 200) {
 	            alert(resp.msg);
 	        } else {
-	            location.href = '/article/saved'
+	            location.href = '/'
 	        }
 	    }, 'json');
 	});

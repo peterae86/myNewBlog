@@ -14,6 +14,29 @@
   }
 }
 
+.addMore {
+  text-align: center;
+  color: $lightBlue;
+  border-left: 5px $lightBlue solid;
+  padding: 10px 10px 50px;
+  font-size: large;
+  &:hover {
+    background-color: $darkBlue2;
+  }
+}
+
+.noMore {
+  text-align: center;
+  color: $lightBlue;
+  border-left: 5px $lightBlue solid;
+  padding: 10px 10px 50px;
+  font-size: large;
+  &:hover {
+    background-color: $darkBlue2;
+  }
+}
+
+
 .articleTitle {
   height: 50px;
   font-size: large;

@@ -4,10 +4,10 @@ var articleService = module.exports = {};
 
 articleService.query = function (num, id, isLogin) {
     if (isLogin) {
-        return db.all("select * from article where id<:id order by id desc limit :num",
-            {":id": id, ":num": num});
+        return db.all("select * from article where id < $id order by id desc limit $num",
+            {"$id": id, "$num": num});
     } else {
-        return db.all("select * from article where id<:id and isPublish=:isPublish order by id desc limit :num",
+        return db.all("select * from article where id < :id and isPublish = :isPublish order by id desc limit :num",
             {":id": id, ":num": num, ":isPublish": true});
     }
 };
@@ -39,7 +39,7 @@ articleService.save = function (article) {
             ":tags": article.tags,
             ":markedContent": article.markedContent,
             ":parsedContent": article.parsedContent,
-            ":isPublish": article.isPublish,
+            ":isPublish": article.isPublish == "true",
             ":id": article.id
         });
     } else {
@@ -51,7 +51,7 @@ articleService.save = function (article) {
             ":tags": article.tags,
             ":markedContent": article.markedContent,
             ":parsedContent": article.parsedContent,
-            ":isPublish": article.isPublish
+            ":isPublish": article.isPublish == "true"
         });
     }
 }

@@ -22,7 +22,7 @@ router.get('/article/tags', function (req, resp) {
 });
 
 router.post('/article/edit', function (req, resp) {
-    if(req.isLogin){
+    if (!req.isLogin) {
         throw new Error();
     }
     articleService.save(req.body);
@@ -31,18 +31,18 @@ router.post('/article/edit', function (req, resp) {
 
 router
     .get('/article/new', function (req, resp) {
-        if(req.isLogin){
+        if (!req.isLogin) {
             throw new Error();
         }
-        resp.render('edit', {title: '施工中', id: ""});
+        resp.render('edit', {id: ""});
     })
     .get('/article/edit/:id', function (req, resp) {
-        if(req.isLogin){
+        if (!req.isLogin) {
             throw new Error();
         }
         articleService.queryById(req.params.id).then(function (res) {
             if (res) {
-                resp.render('edit', {id: req.params.id});
+                resp.render('edit', {id: req.params.id, article: res});
             } else {
                 throw Error("no article");
             }
@@ -51,12 +51,12 @@ router
     .get('/article/:id', function (req, resp) {
         articleService.queryById(req.params.id).then(function (res) {
             if (res) {
-                resp.render('article', res);
+                resp.render('article', {article:res});
             } else {
                 throw Error("no article");
             }
         });
-    })
+    });
 
 
 module.exports = router;

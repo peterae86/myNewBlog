@@ -8,7 +8,3 @@ create table article(
       `tags` TEXT,
       `createTime` datetime
   );
-
-select * from article;
-
-insert into article(`title`,`abstract`,`markedContent`,`parsedContent`,`createTime`) values ('dsdad','dasda','ssss','xxxxx',DATE('now'));

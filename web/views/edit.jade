@@ -13,15 +13,17 @@ div#editor
         input#id(name="id",type="hidden",value="#{id}")
         div
             label="标题:"
-                input#title(name="title")
+                input#title(name="title",value="#{article.title}")
         div
             label="摘要:"
-                input#abstract(name="abstract")
+                input#abstract(name="abstract",value="#{article.abstract}")
         div
             label="标签:"
-                input#tags(name="tags")
+                input#tags(name="tags",value="#{article.tags}")
         div
             input#save(type="button",value="保存")
             input#publish(type="button",value="发布")
         textarea(v-model="input" debounce="300")
+script.
+    var content = "#{article.markedContent}";
 script(type="text/javascript" src="/javascript/editor.js")

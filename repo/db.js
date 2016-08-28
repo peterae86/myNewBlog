@@ -24,7 +24,6 @@ module.exports = {
     get: function (sql, params) {
         return new Promise(function (resolve, reject) {
             db.get(sql, params, function (err, res) {
-                console.log(err, res);
                 if (err) reject(err);
                 else resolve(res);
             });

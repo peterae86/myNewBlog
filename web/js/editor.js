@@ -42,7 +42,7 @@ var reg = /<h[1-3]>.*?<\/h[1-3]>/g;
 var vue = new Vue({
     el: '#editor',
     data: {
-        input: '# hello'
+        input: content
     },
     components: {
         'vue-scrollbar': vueScrollbar
@@ -79,7 +79,6 @@ var vue = new Vue({
         }
     }
 });
-console.log(vue);
 $('#save').click(function () {
     var data = {};
     if($("[name=id]").val()) {
@@ -95,7 +94,7 @@ $('#save').click(function () {
         if (resp.status != 200) {
             alert(resp.msg);
         } else {
-            location.href = '/article/saved'
+            location.href = '/'
         }
     }, 'json');
 });
