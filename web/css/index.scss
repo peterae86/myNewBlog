@@ -1,6 +1,8 @@
 @import "header";
 
 #articleList {
+  border-left: 5px $lightBlue solid;
+  min-height: 100%;
   margin-left: 305px;
   background: $darkBlue;
 }
@@ -9,12 +11,14 @@
   color: whitesmoke;
   border-left: 5px $lightBlue solid;
   padding: 10px 10px 0;
+  margin-left: -5px;
   &:hover {
     background-color: $darkBlue2;
   }
 }
 
 .addMore {
+  margin-left: -5px;
   text-align: center;
   color: $lightBlue;
   border-left: 5px $lightBlue solid;
@@ -26,6 +30,7 @@
 }
 
 .noMore {
+  margin-left: -5px;
   text-align: center;
   color: $lightBlue;
   border-left: 5px $lightBlue solid;
@@ -52,6 +57,7 @@
 }
 
 .time {
+  margin-left: -5px;
   font-size: large;
   border-left: 5px #FFD700 solid;
   color: #FFD700;
