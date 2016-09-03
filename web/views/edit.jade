@@ -23,7 +23,7 @@ div#editor
         div
             input#save(type="button",value="保存")
             input#publish(type="button",value="发布")
-        textarea(v-model="input" debounce="300")
+        textarea(id="input",v-model="input",debounce="300")
 script.
     var content = "#{article.markedContent}";
 script(type="text/javascript" src="/javascript/editor.js")

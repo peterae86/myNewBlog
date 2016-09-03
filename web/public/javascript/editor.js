@@ -127,7 +127,7 @@
 	});
 	$('#save').click(function () {
 	    var data = {};
-	    if($("[name=id]").val()) {
+	    if ($("[name=id]").val()) {
 	        data['id'] = $("[name=id]").val();
 	    }
 	    data['title'] = $("[name=title]").val();
@@ -147,7 +147,7 @@
 
 	$('#publish').click(function () {
 	    var data = {};
-	    if($("[name=id]").val()) {
+	    if ($("[name=id]").val()) {
 	        data['id'] = $("[name=id]").val();
 	    }
 	    data['title'] = $("[name=title]").val();
@@ -164,7 +164,44 @@
 	        }
 	    }, 'json');
 	});
+	function paste(str) {
 
+	    var tc = document.getElementById("input");
+	    var tclen = tc.value.length;
+	    tc.focus();
+	    if (typeof document.selection != "undefined") {
+	        document.selection.createRange().text = str;
+	    }
+	    else {
+	        tc.value = tc.value.substr(0, tc.selectionStart) + str + tc.value.substring(tc.selectionStart, tclen);
+	    }
+	}
+
+	document.getElementById("input").addEventListener("paste", function (e) {
+	    if (!(e.clipboardData && e.clipboardData.items)) {
+	        return;
+	    }
+	    var blob = e.clipboardData.items[0].getAsFile()
+	    if (!blob || blob.size == 0 || blob.type.indexOf("image/") == -1) {
+	        return
+	    }
+	    var formdata = new FormData();
+	    formdata.append("img", blob);
+	    $.ajax({
+	        url: '/upload',
+	        method: 'post',
+	        processData: false,
+	        contentType: false,
+	        data: formdata,
+	        async: false,
+	        success: function (res) {
+	            if (res && res.status == 200) {
+	                paste("![](" + res.data + ")");
+	            }
+	        }
+	    });
+
+	});
 
 
 

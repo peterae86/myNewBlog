@@ -35,7 +35,7 @@ router
         if (!req.isLogin) {
             throw new Error();
         }
-        resp.render('edit', {id: ""});
+        resp.render('edit', {id: "",article:{title:"",abstract:"",tags:""}});
     })
     .get('/article/edit/:id', function (req, resp) {
         if (!req.isLogin) {
