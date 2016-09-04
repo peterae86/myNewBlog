@@ -24,6 +24,10 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(serverPush);
 app.use(function (req, res, next) {
+    if (req.path.indexOf('javascript') != -1) {
+        res.setHeader("Cache-Control", "public, max-age=1800");
+        res.setHeader("Expires", new Date(Date.now() + 1800000).toUTCString());
+    }
     if (req.cookies.username == config.argv.username && req.cookies.password == config.argv.password + "") {
         req.isLogin = true;
     }

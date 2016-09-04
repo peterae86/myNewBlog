@@ -10,7 +10,9 @@ module.exports = function (req, resp, next) {
         if (config[i][0].test(req.path)) {
             for (var j = 1; j < config[i].length; j++) {
                 var path = config[i][j];
-                pushService.push(path, resp);
+                if (!req.cookies['_resource' + path]) {
+                    pushService.push(path, resp);
+                } 
             }
         }
     }
