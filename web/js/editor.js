@@ -132,6 +132,7 @@ function paste(str) {
 }
 
 document.getElementById("input").addEventListener("paste", function (e) {
+    debugger
     if (!(e.clipboardData && e.clipboardData.items)) {
         return;
     }

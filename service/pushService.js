@@ -12,8 +12,10 @@ pushService.push = function (url, resp) {
             accept: '*/*'
         },
         response: {
+            'Cache-Control': 'public, max-age=60',
             'content-type': 'application/javascript',
-            'content-encoding': 'gzip'
+            'content-encoding': 'gzip',
+            // 'set-cookie': '_resource' + url + '=true; Max-Age=60; Path=/;'
         }
     });
     stream.on('error', function (err) {
