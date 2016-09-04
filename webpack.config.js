@@ -5,7 +5,12 @@ var extractCSS = new ExtractTextPlugin('[name].css');
 module.exports = {
     //插件项
     plugins: [
-        extractCSS
+        extractCSS,
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            }
+        })
     ],
     //页面入口文件配置
     entry: {
