@@ -2,9 +2,10 @@ extends layout
 
 block content
     div#header
+        canvas#demo-canvas(style="position:absolute;top:0px;left:0px;z-index:-1;")
         div#headBackground
             div#headImg
-        div
+        div#headContent
             div#title="提莫的博客"
             div.container
                 div.category.index.
@@ -16,5 +17,9 @@ block content
                 div.category.
                     关于
     div#articleList
-
+    script(type="text/javascript" src="/lib/EasePack.min.js")
+    // if lt IE 8
+        script(type="text/javascript" src="/lib/html5.js")
+    script(type="text/javascript" src="/lib/rAF.js")
+    script(type="text/javascript" src="/lib/TweenLite.min.js")
     script(type="text/javascript" src="/javascript/header.js")

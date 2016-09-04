@@ -1,7 +1,7 @@
 var pushService = require('./service/pushService');
 
 var config = [
-    [/\/$/, '/javascript/header.js'],
+    [/\/$/, '/lib/EasePack.min.js', '/lib/html5.js', '/lib/rAF.js', '/lib/TweenLite.min.js', '/javascript/header.js'],
     [/\/article\/\d+$/, '/javascript/article.js']
 ];
 
@@ -12,7 +12,7 @@ module.exports = function (req, resp, next) {
                 var path = config[i][j];
                 if (!req.cookies['_resource' + path]) {
                     pushService.push(path, resp);
-                } 
+                }
             }
         }
     }

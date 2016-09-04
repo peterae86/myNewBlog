@@ -1,6 +1,9 @@
 var css = require("../css/index.scss");
 var Vue = require("vue");
 var $ = require("jQuery");
+var anmi = require('./header-anmi');
+
+anmi();
 
 var minId = 1000000;
 var time = '';
