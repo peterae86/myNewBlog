@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(serverPush);
 app.use(function (req, res, next) {
-    if(req.hostname!="www.backkoms.com"){
+    if(!req.hostname.endsWith("backkoms.com")){
         res.end();
     }
     if (req.path.indexOf('javascript') != -1) {

@@ -14,7 +14,8 @@ var express = require("express");
 proxy(config.httpsConfig, 8443);
 var redirectApp = express();
 redirectApp.use('*', function (req, res) {
-    if (req.hostname == 'www.backkoms.com') {
+    console.log(req.hostname);
+    if (req.hostname.endsWith('backkoms.com')) {
         return res.redirect(['https://', req.hostname, req.originalUrl].join(''));
     } else if (req.hostname == "www.jimu.com") {
         var cookies=[];
