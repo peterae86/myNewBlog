@@ -14,7 +14,21 @@ var express = require("express");
 proxy(config.httpsConfig, 8443);
 var redirectApp = express();
 redirectApp.use('*', function (req, res) {
-    return res.redirect(['https://', req.hostname, req.originalUrl].join(''));
+    if (req.hostname == 'www.backkoms.com') {
+        return res.redirect(['https://', req.hostname, req.originalUrl].join(''));
+    } else if (req.hostname == "www.jimu.com") {
+        var cookies=[];
+        req.headers.cookie && req.headers.cookie.split(';').forEach(function (Cookie) {
+            console.log(Cookie);
+            var parts = Cookie.split('=');
+            cookies.push(parts[0] + "=" + parts[1] + "; Domain=jimu.com; Path=/")
+        });
+        res.writeHead(302, {
+            'Location': 'http://lj-05.jimu.com/' + req.url,
+            'Set-Cookie': cookies
+        });
+        res.end();
+    }
 });
 http.createServer(redirectApp).listen(80);
 var server = http2.createServer(config.httpsConfig, app);
