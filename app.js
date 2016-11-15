@@ -24,6 +24,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(serverPush);
 app.use(function (req, res, next) {
+    console.log(req.hostname);
     if(!req.hostname.endsWith("backkoms.com")){
         res.end();
     }
