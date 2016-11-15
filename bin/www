@@ -16,9 +16,9 @@ var redirectApp = express();
 redirectApp.use('*', function (req, res) {
     console.log(req.hostname);
     if (req.hostname.endsWith('backkoms.com')) {
-        return res.redirect(['https://', req.hostname, req.originalUrl].join(''));
+        res.redirect(['https://', req.hostname, req.originalUrl].join(''));
     } else if (req.hostname == "www.jimu.com") {
-        var cookies=[];
+        var cookies = [];
         req.headers.cookie && req.headers.cookie.split(';').forEach(function (Cookie) {
             console.log(Cookie);
             var parts = Cookie.split('=');
