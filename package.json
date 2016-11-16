@@ -38,7 +38,7 @@
     "remarkable": "^1.6.2",
     "sass-loader": "4.0.0",
     "serve-favicon": "~2.3.0",
-    "spdy": "^3.3.4",
+    "spdy": "^3.4.4",
     "sqlite": "^2.2.0",
     "style-loader": "0.13.1",
     "vue": "^1.0.26",
