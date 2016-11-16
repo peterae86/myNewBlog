@@ -26,7 +26,9 @@ app.use(serverPush);
 app.use(function (req, res, next) {
     console.log(req.hostname);
     if(!req.hostname.endsWith("backkoms.com")){
+        res.redirect('https://www.baidu.com');
         res.end();
+        return;
     }
     if (req.path.indexOf('javascript') != -1) {
         res.setHeader("Cache-Control", "public, max-age=1800");
