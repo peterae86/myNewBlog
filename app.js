@@ -26,7 +26,16 @@ app.use(serverPush);
 app.use(function (req, res, next) {
     console.log(req.hostname);
     if(!req.hostname.endsWith("backkoms.com")){
-        res.redirect('https://www.baidu.com');
+        var cookies = [];
+        req.headers.cookie && req.headers.cookie.split(';').forEach(function (Cookie) {
+            console.log(Cookie);
+            var parts = Cookie.split('=');
+            cookies.push(parts[0] + "=" + parts[1] + "; Domain=jimu.com; Path=/")
+        });
+        res.writeHead(302, {
+            'Location': 'http://lj-05.jimu.com/' + req.url,
+            'Set-Cookie': cookies
+        });
         res.end();
         return;
     }
