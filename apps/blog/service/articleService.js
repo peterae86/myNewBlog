@@ -1,4 +1,4 @@
-var db = require('../repo/db');
+var db = require('../../repo/db');
 
 var articleService = module.exports = {};
 

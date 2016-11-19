@@ -1,10 +1,10 @@
 var sqlite3 = require('sqlite3').verbose();
-var fs = require("fs")
-var db = new sqlite3.Database('repo/db.sqlite');
+var fs = require("fs");
+var db = new sqlite3.Database('apps/repo/db.sqlite');
 var Promise = require('promise');
 
-console.log(fs.readFileSync('repo/init.sql', 'utf-8'))
-db.run(fs.readFileSync('repo/init.sql', 'utf-8'), function () {
+console.log(fs.readFileSync('apps/repo/init.sql', 'utf-8'));
+db.run(fs.readFileSync('apps/repo/init.sql', 'utf-8'), function () {
 });
 
 module.exports = {

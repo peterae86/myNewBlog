@@ -9,15 +9,12 @@ var fs = require("fs");
 var http = require("http");
 var url = require("url");
 var net = require("net");
-var config = require("./config");
-var app = express();
+var config = require("./../config/config");
 var serverPush = require('./serverPush');
-// view engine setup
+
+var app = express();
 app.set('views', path.join(__dirname, 'web/views'));
 app.set('view engine', 'jade');
-
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -25,17 +22,7 @@ app.use(cookieParser());
 app.use(serverPush);
 app.use(function (req, res, next) {
     console.log(req.hostname);
-    if(!req.hostname.endsWith("backkoms.com")){
-        var cookies = [];
-        req.headers.cookie && req.headers.cookie.split(';').forEach(function (Cookie) {
-            console.log(Cookie);
-            var parts = Cookie.split('=');
-            cookies.push(parts[0] + "=" + parts[1] + "; Domain=jimu.com; Path=/")
-        });
-        res.writeHead(302, {
-            'Location': 'http://lj-05.jimu.com/' + req.url,
-            'Set-Cookie': cookies
-        });
+    if (!req.hostname.endsWith("backkoms.com")) {
         res.end();
         return;
     }
@@ -48,7 +35,7 @@ app.use(function (req, res, next) {
     }
     next();
 });
-fs.readdirSync('./routes').forEach(function (file) {
+fs.readdirSync('apps/blog/routes').forEach(function (file) {
     app.use('/', require('./routes/' + file))
 });
 app.use(compression());

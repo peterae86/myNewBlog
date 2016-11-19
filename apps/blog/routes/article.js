@@ -1,8 +1,8 @@
 var express = require('express');
-var router = express.Router();
 var articleService = require('../service/articleService');
 var pushService = require("../service/pushService.js");
 
+var router = express.Router();
 /* GET home page. */
 router.get('/article/list', function (req, resp) {
     var num = req.query.num;
