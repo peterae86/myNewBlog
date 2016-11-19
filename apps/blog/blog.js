@@ -13,7 +13,7 @@ var config = require("./../config/config");
 var serverPush = require('./serverPush');
 
 var app = express();
-app.set('views', path.join(__dirname, 'apps/blog/web/views'));
+app.set('views', path.join(__dirname, 'web/views'));
 app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -39,7 +39,7 @@ fs.readdirSync('apps/blog/routes').forEach(function (file) {
     app.use('/', require('./routes/' + file))
 });
 app.use(compression());
-app.use(express.static(path.join(__dirname, 'apps/blog/web/public')));
+app.use(express.static(path.join(__dirname, 'web/public')));
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     var err = new Error('Not Found');
@@ -65,6 +65,7 @@ if (app.get('env') === 'development') {
 // production error handler
 // no stacktraces leaked to user
 app.use(function (err, req, res, next) {
+    console.log(err);
     res.status(err.status || 500);
     res.render('error', {
         message: err.message,
