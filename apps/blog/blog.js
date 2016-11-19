@@ -13,7 +13,7 @@ var config = require("./../config/config");
 var serverPush = require('./serverPush');
 
 var app = express();
-app.set('views', path.join(__dirname, 'web/views'));
+app.set('views', path.join(__dirname, 'apps/blog/web/views'));
 app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(bodyParser.json());
