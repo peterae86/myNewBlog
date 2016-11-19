@@ -22,7 +22,7 @@ pushService.push = function (url, resp) {
         console.log(err);
     });
     if (!cachedJs[url]) {
-        cachedJs[url] = zlib.gzipSync(fs.readFileSync('web/public/' + url));
+        cachedJs[url] = zlib.gzipSync(fs.readFileSync('apps/blog/web/public/' + url));
     }
     stream.end(cachedJs[url]);
 };
