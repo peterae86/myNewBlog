@@ -39,7 +39,7 @@ fs.readdirSync('apps/blog/routes').forEach(function (file) {
     app.use('/', require('./routes/' + file))
 });
 app.use(compression());
-app.use(express.static(path.join(__dirname, 'web/public')));
+app.use(express.static(path.join(__dirname, 'apps/blog/web/public')));
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     var err = new Error('Not Found');
