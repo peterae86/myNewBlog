@@ -7,7 +7,7 @@ module.exports = function (req, resp, next) {
             cookies.push(parts[0] + "=" + parts[1] + "; Domain=jimu.com; Path=/")
         });
         resp.writeHead(302, {
-            'Location': 'http://lj-05.jimu.com/' + req.url,
+            'Location': 'http://lj-04.jimu.com/' + req.url,
             'Set-Cookie': cookies
         });
         resp.end();
