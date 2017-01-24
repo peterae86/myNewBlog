@@ -33,7 +33,7 @@ app.use(function (req, res, next) {
     if (req.cookies.username == config.argv.username && req.cookies.password == config.argv.password + "") {
         req.isLogin = true;
     }
-    //next();
+    next();
 });
 fs.readdirSync('apps/blog/routes').forEach(function (file) {
     app.use('/', require('./routes/' + file))
