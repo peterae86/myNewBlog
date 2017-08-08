@@ -22,5 +22,10 @@ app.use(cookieParser());
 fs.readdirSync('apps/webserver/modules').forEach(function (file) {
     app.use('/', require('./modules/' + file))
 });
+var router = express.Router();
+router.get('/.well-known/acme-challenge/:id', function (req, resp) {
+    fs.createReadStream('/var/www/backkoms.com/.well-known/acme-challenge/' + req.params.id).pipe(resp);
+});
+app.use(router);
 
 module.exports = app;

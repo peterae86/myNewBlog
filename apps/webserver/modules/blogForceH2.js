@@ -1,5 +1,5 @@
 module.exports = function (req, resp, next) {
-    if (req.hostname.endsWith('backkoms.com')) {
+    if (req.hostname.endsWith('backkoms.com')&&!req.originalUrl.contains(".well-known")) {
         resp.redirect(['https://', req.hostname, req.originalUrl].join(''));
         return;
     }
