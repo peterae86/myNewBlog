@@ -59,8 +59,6 @@ var proxy = function (httpsConfig, port) {//httpsConfig should contains 'key' an
             });
             socket.on('error', function (e) {
                 console.log("socket error: " + e);
-                socket._handle._spdyState.stream.respond(502, {});
-                socket.end();
                 tunnel.destroy();
             });
         } catch (e) {
