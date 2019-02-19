@@ -2,10 +2,10 @@ var fs = require("fs");
 var argv = require('minimist')(process.argv.slice(2));
 module.exports = {
     httpsConfig: {
-        key: fs.readFileSync('./my.key'),
-        cert: fs.readFileSync('./my.crt'),
+        key: fs.readFileSync('/root/backkoms.com.key'),
+        cert: fs.readFileSync('/root/backkoms.crt'),
         spdy: {
-            protocols: ['http/1.1'],
+            protocols: ['h2','http/1.1'],
             plain: false,
 
             // **optional**
