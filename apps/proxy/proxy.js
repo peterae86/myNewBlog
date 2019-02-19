@@ -52,13 +52,13 @@ var proxy = function (httpsConfig, port) {//httpsConfig should contains 'key' an
             });
             tunnel.setNoDelay(true);
             tunnel.on('error', function (e) {
-                console.log("Tunnel error: ".red + e);
+                console.log("Tunnel error: " + e);
                 socket._handle._spdyState.stream.respond(502, {});
                 socket.end();
                 tunnel.destroy();
             });
             socket.on('error', function (e) {
-                console.log("socket error: ".red + e);
+                console.log("socket error: " + e);
                 socket._handle._spdyState.stream.respond(502, {});
                 socket.end();
                 tunnel.destroy();
