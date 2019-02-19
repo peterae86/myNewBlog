@@ -7,6 +7,7 @@ var url = require("url");
 var net = require("net");
 var http2 = require("spdy");
 var deprecatedHeaders = ['connection', 'host', 'keep-alive', 'proxy-connection', 'transfer-encoding', 'upgrade'];
+
 var proxy = function (httpsConfig, port) {//httpsConfig should contains 'key' and 'cert'
     http2.createServer(httpsConfig).on('request', function (req, resp) {
         try {
@@ -54,6 +55,13 @@ var proxy = function (httpsConfig, port) {//httpsConfig should contains 'key' an
                 console.log("Tunnel error: ".red + e);
                 socket._handle._spdyState.stream.respond(502, {});
                 socket.end();
+                tunnel.destroy();
+            });
+            socket.on('error', function (e) {
+                console.log("socket error: ".red + e);
+                socket._handle._spdyState.stream.respond(502, {});
+                socket.end();
+                tunnel.destroy();
             });
         } catch (e) {
             console.log(e);
