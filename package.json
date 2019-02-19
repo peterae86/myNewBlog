@@ -39,7 +39,7 @@
     "sass-loader": "4.0.0",
     "serve-favicon": "~2.3.0",
     "spdy": "4.0.0",
-    "sqlite": "^2.2.0",
+    "sqlite": "3.0.2",
     "style-loader": "0.13.1",
     "vue": "^1.0.26",
     "vue-html-loader": "^1.2.3",
