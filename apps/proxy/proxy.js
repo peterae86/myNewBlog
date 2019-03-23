@@ -7,7 +7,7 @@ var url = require("url");
 var net = require("net");
 var zlib = require("zlib");
 var http2 = require("spdy");
-var deprecatedHeaders = ['connection', 'host', 'keep-alive', 'proxy-connection', 'transfer-encoding', 'upgrade', "content-encoding"];
+var deprecatedHeaders = ['connection', 'host', 'keep-alive', 'proxy-connection', 'transfer-encoding', 'upgrade'];
 
 var proxy = function (httpsConfig, port) {//httpsConfig should contains 'key' and 'cert'
     http2.createServer(httpsConfig).on('request', function (req, resp) {
@@ -20,35 +20,22 @@ var proxy = function (httpsConfig, port) {//httpsConfig should contains 'key' an
                 path: req.url,
                 headers: req.headers
             };
-            var buffer = [];
+           // var buffer = [];
             var proxyReq = http.request(options, function (proxyResp) {
                 deprecatedHeaders.forEach(function (header) {
                     if (proxyResp.headers.hasOwnProperty(header)) {
                         delete proxyResp.headers[header];
                     }
                 });
-                proxyResp.headers["content-type"] = (proxyResp.headers["content-type"] || "").replace(/charset=.*/, "charset=UTF-8")
+               // proxyResp.headers["content-type"] = (proxyResp.headers["content-type"] || "").replace(/charset=.*/, "charset=UTF-8")
                 console.log(proxyResp.headers);
                 resp.writeHead(proxyResp.statusCode, proxyResp.headers);
-                var gunzip = zlib.createGunzip();
-                proxyResp.pipe(gunzip);
-
-                gunzip.on('data', function(data) {
-                    // decompression chunk ready, add it to the buffer
-                    buffer.push(data.toString())
-
-                }).on("end", function() {
-                    // response and decompression complete, join the buffer and return
-                    console.log(buffer)
-
-                }).on("error", function(e) {
-                    console.log(e)
-                })
-                //proxyResp.pipe().pipe(resp)
+                proxyResp.pipe(resp)
             }).on('error', function (e) {
                 console.log(e);
                 resp.end()
             });
+            resp.setNoDelay(true);
             req.pipe(proxyReq);
         } catch (e) {
             console.log(e);
