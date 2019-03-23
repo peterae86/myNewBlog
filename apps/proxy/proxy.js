@@ -29,7 +29,15 @@ var proxy = function (httpsConfig, port) {//httpsConfig should contains 'key' an
                 proxyResp.headers["content-type"] = (proxyResp.headers["content-type"] || "").replace(/charset=.*/, "charset=UTF-8")
                 console.log(proxyResp.headers);
                 resp.writeHead(proxyResp.statusCode, proxyResp.headers);
-                proxyResp.pipe(resp)
+                var resData = "";
+                proxyResp.on("data",function(data){
+                    resData += data;
+                });
+                proxyResp.on("end", function() {
+                    console.log(resData);
+                   //callback(null,JSON.parse(resData));
+                });
+                //proxyResp.pipe().pipe(resp)
             }).on('error', function (e) {
                 console.log(e);
                 resp.end()
