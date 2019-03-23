@@ -7,7 +7,7 @@ var url = require("url");
 var net = require("net");
 var zlib = require("zlib");
 var http2 = require("spdy");
-var deprecatedHeaders = ['connection', 'host', 'keep-alive', 'proxy-connection', 'transfer-encoding', 'upgrade'];
+var deprecatedHeaders = ['connection', 'host', 'keep-alive', 'proxy-connection', 'upgrade'];
 
 var proxy = function (httpsConfig, port) {//httpsConfig should contains 'key' and 'cert'
     http2.createServer(httpsConfig).on('request', function (req, resp) {
