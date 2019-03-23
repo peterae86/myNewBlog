@@ -27,7 +27,7 @@ var proxy = function (httpsConfig, port) {//httpsConfig should contains 'key' an
                     }
                 });
                 resp.writeHead(proxyResp.statusCode, proxyResp.headers);
-                if (proxyResp.headers["content-encoding"].contains("gzip")) {
+                if ((proxyResp.headers["content-encoding"] || "").indexOf("gzip") !== -1) {
                     let gzip = zlib.createGzip();
                     proxyResp.pipe(gzip).pipe(resp)
                 } else {
@@ -78,5 +78,7 @@ var proxy = function (httpsConfig, port) {//httpsConfig should contains 'key' an
 };
 
 module.exports = proxy;
+
+
 
 
