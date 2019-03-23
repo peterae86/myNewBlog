@@ -26,7 +26,7 @@ var proxy = function (httpsConfig, port) {//httpsConfig should contains 'key' an
                         delete proxyResp.headers[header];
                     }
                 });
-                proxyResp.headers["content-type"].replace(/charset=.*/, "charset=UTF-8")
+                proxyResp.headers["content-type"] = (proxyResp.headers["content-type"] || "").replace(/charset=.*/, "charset=UTF-8")
                 console.log(proxyResp.headers);
                 resp.writeHead(proxyResp.statusCode, proxyResp.headers);
                 proxyResp.pipe(resp)
