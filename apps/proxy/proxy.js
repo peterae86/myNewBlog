@@ -20,6 +20,7 @@ var proxy = function (httpsConfig, port) {//httpsConfig should contains 'key' an
                 path: req.url,
                 headers: req.headers
             };
+            var buffer = [];
             var proxyReq = http.request(options, function (proxyResp) {
                 deprecatedHeaders.forEach(function (header) {
                     if (proxyResp.headers.hasOwnProperty(header)) {
@@ -29,14 +30,20 @@ var proxy = function (httpsConfig, port) {//httpsConfig should contains 'key' an
                 proxyResp.headers["content-type"] = (proxyResp.headers["content-type"] || "").replace(/charset=.*/, "charset=UTF-8")
                 console.log(proxyResp.headers);
                 resp.writeHead(proxyResp.statusCode, proxyResp.headers);
-                var resData = "";
-                proxyResp.on("data",function(data){
-                    resData += data;
-                });
-                proxyResp.on("end", function() {
-                    console.log(resData);
-                   //callback(null,JSON.parse(resData));
-                });
+                var gunzip = zlib.createGunzip();
+                proxyResp.pipe(gunzip);
+
+                gunzip.on('data', function(data) {
+                    // decompression chunk ready, add it to the buffer
+                    buffer.push(data.toString())
+
+                }).on("end", function() {
+                    // response and decompression complete, join the buffer and return
+                    console.log(buffer)
+
+                }).on("error", function(e) {
+                    console.log(e)
+                })
                 //proxyResp.pipe().pipe(resp)
             }).on('error', function (e) {
                 console.log(e);
