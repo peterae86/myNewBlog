@@ -22,11 +22,11 @@ var proxy = function (httpsConfig, port) {//httpsConfig should contains 'key' an
             };
            // var buffer = [];
             var proxyReq = http.request(options, function (proxyResp) {
-                deprecatedHeaders.forEach(function (header) {
-                    if (proxyResp.headers.hasOwnProperty(header)) {
-                        delete proxyResp.headers[header];
-                    }
-                });
+                // deprecatedHeaders.forEach(function (header) {
+                //     if (proxyResp.headers.hasOwnProperty(header)) {
+                //         delete proxyResp.headers[header];
+                //     }
+                // });
                // proxyResp.headers["content-type"] = (proxyResp.headers["content-type"] || "").replace(/charset=.*/, "charset=UTF-8")
                 console.log(proxyResp.headers);
                 resp.writeHead(proxyResp.statusCode, proxyResp.headers);
