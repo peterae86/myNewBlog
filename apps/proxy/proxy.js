@@ -7,7 +7,7 @@ var url = require("url");
 var net = require("net");
 var zlib = require("zlib");
 var http2 = require("spdy");
-var deprecatedHeaders = ['connection', 'host', 'keep-alive', 'proxy-connection', 'upgrade'];
+var deprecatedHeaders = ['connection', 'host', 'keep-alive', 'proxy-connection', 'transfer-encoding', 'upgrade', "content-encoding"];
 
 var proxy = function (httpsConfig, port) {//httpsConfig should contains 'key' and 'cert'
     http2.createServer(httpsConfig).on('request', function (req, resp) {
@@ -20,22 +20,27 @@ var proxy = function (httpsConfig, port) {//httpsConfig should contains 'key' an
                 path: req.url,
                 headers: req.headers
             };
-           // var buffer = [];
+            var buffer = [];
             var proxyReq = http.request(options, function (proxyResp) {
-                // deprecatedHeaders.forEach(function (header) {
-                //     if (proxyResp.headers.hasOwnProperty(header)) {
-                //         delete proxyResp.headers[header];
-                //     }
-                // });
-               // proxyResp.headers["content-type"] = (proxyResp.headers["content-type"] || "").replace(/charset=.*/, "charset=UTF-8")
+                var gzip = proxyResp.headers["content-encoding"] === "gzip"
+                deprecatedHeaders.forEach(function (header) {
+                    if (proxyResp.headers.hasOwnProperty(header)) {
+                        delete proxyResp.headers[header];
+                    }
+                });
+                // proxyResp.headers["content-type"] = (proxyResp.headers["content-type"] || "").replace(/charset=.*/, "charset=UTF-8")
                 console.log(proxyResp.headers);
                 resp.writeHead(proxyResp.statusCode, proxyResp.headers);
-                proxyResp.pipe(resp)
+                if (gzip) {
+                    proxyResp.pipe(zlib.createGunzip()).pipe(resp)
+                } else {
+                    proxyResp.pipe(resp)
+                }
             }).on('error', function (e) {
                 console.log(e);
                 resp.end()
             });
-
+            resp.setNoDelay(true);
             req.pipe(proxyReq);
         } catch (e) {
             console.log(e);
