@@ -40,7 +40,6 @@ var proxy = function (httpsConfig, port) {//httpsConfig should contains 'key' an
                 console.log(e);
                 resp.end()
             });
-            resp.setNoDelay(true);
             req.pipe(proxyReq);
         } catch (e) {
             console.log(e);
