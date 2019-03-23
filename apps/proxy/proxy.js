@@ -5,6 +5,7 @@
 var http = require("http");
 var url = require("url");
 var net = require("net");
+var zlib = require("zlib");
 var http2 = require("spdy");
 var deprecatedHeaders = ['connection', 'host', 'keep-alive', 'proxy-connection', 'transfer-encoding', 'upgrade'];
 
@@ -26,7 +27,12 @@ var proxy = function (httpsConfig, port) {//httpsConfig should contains 'key' an
                     }
                 });
                 resp.writeHead(proxyResp.statusCode, proxyResp.headers);
-                proxyResp.pipe(resp)
+                if (proxyResp.headers["content-encoding"].contains("gzip")) {
+                    let gzip = zlib.createGzip();
+                    proxyResp.pipe(gzip).pipe(resp)
+                } else {
+                    proxyResp.pipe(resp)
+                }
             }).on('error', function (e) {
                 console.log(e);
                 resp.end()
