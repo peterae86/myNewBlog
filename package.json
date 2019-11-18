@@ -28,7 +28,7 @@
     "json-loader": "^0.5.4",
     "jsx-loader": "0.13.2",
     "minimist": "latest",
-    "morgan": "~1.7.0",
+    "morgan": "~1.9.1",
     "multer": "^1.2.0",
     "node-markdown": "^0.1.1",
     "node-sass": "3.8.0",
