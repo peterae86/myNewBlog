@@ -17,7 +17,7 @@
     "connect-multiparty": "^2.0.0",
     "cookie-parser": "~1.4.3",
     "css-loader": "*",
-    "debug": "~2.2.0",
+    "debug": "~4.1.1",
     "express": "~4.13.4",
     "extract-text-webpack-plugin": "latest",
     "html-loader": "^0.4.3",
