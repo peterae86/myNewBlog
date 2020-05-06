@@ -1,8 +1,11 @@
 #!/usr/bin/env node
 var fs = require('fs');
 
-fs.readdirSync('apps').forEach(function (file) {
-    if (file.endsWith('.js')) {
-        require("../apps/" + file)();
-    }
-});
+// fs.readdirSync('apps').forEach(function (file) {
+//     if (file.endsWith('.js')) {
+//         require("../apps/" + file)();
+//     }
+// });
+
+var blog = require("../apps/blog/blog")
+http.createServer(blog).listen(8080);
