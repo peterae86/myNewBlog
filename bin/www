@@ -8,4 +8,4 @@ var http = require('http');
 // });
 
 var blog = require("../apps/blog/blog")
-http.createServer(blog).listen(8080,'0.0.0.0');
+http.createServer(blog).listen(443,'0.0.0.0');
